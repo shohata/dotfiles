@@ -1,0 +1,8 @@
+.netrwhist
+npm-debug.log
+config/nvim/spell
+config/nvim/shada
+Brewfile.lock.json
+lazy-lock.json
+config/kitty/kitty-overrides.conf
+
