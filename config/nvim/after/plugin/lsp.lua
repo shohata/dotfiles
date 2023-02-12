@@ -2,40 +2,54 @@ local lspconfig = require("lspconfig")
 local mason_lspconfig = require("mason-lspconfig")
 local mason_null_ls = require("mason-null-ls")
 local theme = require("theme")
-local colors = theme.colors
-local icons = theme.icons
-local border = theme.border
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local group = vim.api.nvim_create_augroup("LspConfig", { clear = true })
 local format_group = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
-local null_ls = require("null-ls")
 
-require("mason").setup({ ui = { border = border } })
-
-mason_null_ls.setup_handlers({
-  function(source_name, methods) require('mason-null-ls.automatic_setup')(source_name, methods) end
+require("mason").setup({
+  ui = { border = theme.border },
 })
 
-mason_null_ls.setup({ automatic_setup = true, ensure_installed = { "luaformatter", "prettierd" } })
+mason_null_ls.setup_handlers({
+  function(source_name, methods)
+    require("mason-null-ls.automatic_setup")(source_name, methods)
+  end,
+})
 
-null_ls.setup({
-  border = border,
+mason_null_ls.setup({
+  automatic_setup = true,
+  ensure_installed = {
+    "luaformatter",
+    "prettierd",
+  },
+})
+
+require("null-ls").setup({
+  border = theme.border,
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
       vim.api.nvim_clear_autocmds({ group = format_group, buffer = bufnr })
       vim.api.nvim_create_autocmd("BufWritePre", {
         group = vim.api.nvim_create_augroup("LspFormatting", {}),
         buffer = bufnr,
-        callback = function() vim.lsp.buf.format({ bufnr = bufnr }) end
+        callback = function()
+          vim.lsp.buf.format({ bufnr = bufnr })
+        end,
       })
     end
-  end
+  end,
 })
 
 mason_lspconfig.setup({
-  ensure_installed = { "eslint", "tsserver", "sumneko_lua", "denols", "vimls" },
+  ensure_installed = {
+    "eslint",
+    "tsserver",
+    "lua_ls",
+    "denols",
+    "vimls"
+  },
   automatic_installation = true,
-  ui = { check_outdated_servers_on_open = true }
+  ui = { check_outdated_servers_on_open = true },
 })
 
 local format_async = function(err, _, result, _, bufnr)
@@ -51,19 +65,25 @@ end
 vim.lsp.handlers["textDocument/formatting"] = format_async
 
 local lsp_organize_imports = function()
-  local params = { command = "_typescript.organizeImports", arguments = { vim.api.nvim_buf_get_name(0) }, title = "" }
+  local params = {
+    command = "_typescript.organizeImports",
+    arguments = { vim.api.nvim_buf_get_name(0) },
+    title = "",
+  }
   vim.lsp.buf.execute_command(params)
 end
 -- _G makes this function available to vimscript lua calls
 _G.lsp_organize_imports = lsp_organize_imports
 
 -- show diagnostic line with custom border and styling
-local lsp_show_diagnostics = function() vim.diagnostic.open_float({ border = border }) end
+local lsp_show_diagnostics = function()
+  vim.diagnostic.open_float({ border = theme.border })
+end
 
 local on_attach = function(client, bufnr)
-  vim.cmd [[command! OR lua lsp_organize_imports()]]
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+  vim.cmd([[command! OR lua lsp_organize_imports()]])
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = theme.border })
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.hover, { border = theme.border })
 
   local opts = { noremap = true, silent = true }
   vim.keymap.set("n", "<leader>aa", lsp_show_diagnostics, opts)
@@ -107,53 +127,16 @@ local on_attach = function(client, bufnr)
   end
 end
 
-local diagnosticls_settings = {
-  filetypes = { "sh" },
-  init_options = {
-    linters = {
-      shellcheck = {
-        sourceName = "shellcheck",
-        command = "shellcheck",
-        debounce = 100,
-        args = { "--format=gcc", "-" },
-        offsetLine = 0,
-        offsetColumn = 0,
-        formatLines = 1,
-        formatPattern = {
-          "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
-          { line = 1, column = 2, message = 4, security = 3 }
-        },
-        securities = { error = "error", warning = "warning", note = "info" }
-      }
-    },
-    filetypes = { sh = "shellcheck" }
-  }
-}
-
-local lua_settings = {
-  Lua = {
-    runtime = {
-      -- LuaJIT in the case of Neovim
-      version = "LuaJIT",
-      path = vim.split(package.path, ";")
-    },
-    diagnostics = {
-      -- Get the language server to recognize the `vim` global
-      globals = { "vim" }
-    },
-    workspace = {
-      -- Make the server aware of Neovim runtime files
-      library = { [vim.fn.expand("$VIMRUNTIME/lua")] = true, [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true }
-    }
-  }
-}
-
 local function make_config(callback)
   callback = callback or function(config) return config end
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = { "documentation", "detail", "additionalTextEdits" }
+    properties = {
+      "documentation",
+      "detail",
+      "additionalTextEdits",
+    },
   }
   capabilities.textDocument.colorProvider = { dynamicRegistration = false }
   capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
@@ -161,7 +144,9 @@ local function make_config(callback)
   return callback({ capabilities = capabilities, on_attach = on_attach })
 end
 
-lspconfig.rust_analyzer.setup(make_config(function(config) return config end))
+lspconfig.rust_analyzer.setup(make_config(function(config)
+  return config
+end))
 
 lspconfig.eslint.setup(make_config(function(config)
   config.filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" }
@@ -173,9 +158,11 @@ lspconfig.tsserver.setup(make_config(function(config)
   config.handlers = {
     ["textDocument/definition"] = function(err, result, ctx, conf)
       -- if there is more than one result, just use the first one
-      if #result > 1 then result = { result[1] } end
+      if #result > 1 then
+        result = { result[1] }
+      end
       vim.lsp.handlers["textDocument/definition"](err, result, ctx, conf)
-    end
+    end,
   }
   return config
 end))
@@ -187,8 +174,27 @@ lspconfig.denols.setup(make_config(function(config)
   return config
 end))
 
-lspconfig.sumneko_lua.setup(make_config(function(config)
-  config.settings = lua_settings
+lspconfig.lua_ls.setup(make_config(function(config)
+  config.settings = {
+    Lua = {
+      runtime = {
+        -- LuaJIT in the case of Neovim
+        version = "LuaJIT",
+        path = vim.split(package.path, ";"),
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { "vim" },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = {
+          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+        },
+      },
+    },
+  }
   config.root_dir = function(fname)
     local util = require("lspconfig/util")
     return util.find_git_ancestor(fname) or util.path.dirname(fname)
@@ -203,24 +209,55 @@ lspconfig.vimls.setup(make_config(function(config)
 end))
 
 lspconfig.diagnosticls.setup(make_config(function(config)
-  config.settings = diagnosticls_settings
+  config.settings = {
+    filetypes = { "sh" },
+    init_options = {
+      linters = {
+        shellcheck = {
+          sourceName = "shellcheck",
+          command = "shellcheck",
+          debounce = 100,
+          args = { "--format=gcc", "-" },
+          offsetLine = 0,
+          offsetColumn = 0,
+          formatLines = 1,
+          formatPattern = {
+            "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
+            { line = 1, column = 2, message = 4, security = 3 },
+          },
+          securities = { error = "error", warning = "warning", note = "info" }
+        }
+      },
+      filetypes = { sh = "shellcheck" },
+    },
+  }
   return config
 end))
 
 -- set up custom symbols for LSP errors
-local signs =
-{ Error = icons.error, Warning = icons.warning, Warn = icons.warning, Hint = icons.hint, Info = icons.hint }
+local signs = {
+  Error = theme.icons.error,
+  Warning = theme.icons.warning,
+  Warn = theme.icons.warning,
+  Hint = theme.icons.hint,
+  Info = theme.icons.hint,
+}
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-vim.diagnostic.config({ virtual_text = true, signs = true, update_in_insert = true, severity_sort = true })
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  update_in_insert = true,
+  severity_sort = true
+})
 
 -- Set colors for completion items
-vim.cmd("highlight! CmpItemAbbrMatch guibg=NONE guifg=" .. colors.lightblue)
-vim.cmd("highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=" .. colors.lightblue)
-vim.cmd("highlight! CmpItemKindFunction guibg=NONE guifg=" .. colors.magenta)
-vim.cmd("highlight! CmpItemKindMethod guibg=NONE guifg=" .. colors.magenta)
-vim.cmd("highlight! CmpItemKindVariable guibg=NONE guifg=" .. colors.blue)
-vim.cmd("highlight! CmpItemKindKeyword guibg=NONE guifg=" .. colors.fg)
+vim.cmd("highlight! CmpItemAbbrMatch guibg=NONE guifg=" .. theme.colors.lightblue)
+vim.cmd("highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=" .. theme.colors.lightblue)
+vim.cmd("highlight! CmpItemKindFunction guibg=NONE guifg=" .. theme.colors.magenta)
+vim.cmd("highlight! CmpItemKindMethod guibg=NONE guifg=" .. theme.colors.magenta)
+vim.cmd("highlight! CmpItemKindVariable guibg=NONE guifg=" .. theme.colors.blue)
+vim.cmd("highlight! CmpItemKindKeyword guibg=NONE guifg=" .. theme.colors.fg)

@@ -31,33 +31,48 @@ success() {
     echo -e "${COLOR_GREEN}$1${COLOR_NONE}"
 }
 
-get_linkables() {
-    find -H "$DOTFILES" -maxdepth 3 -name '*.symlink'
+create_symlink() {
+    src="$1"
+    dest="$2"
+
+    if [ -e "$dest" ]; then
+        answer="n"
+        info "~${dest#$HOME} already exists..."
+        read -p "Are you sure you want to overwrite? (Y/n): " answer
+        case "$answer" in
+        "" | "Y" | "y" | "Yes" | "yes")
+            rm -rf "$dest"
+            info "Creating symlink for $src"
+            ln -s "$src" "$dest"
+            ;;
+        esac
+    else
+        info "Creating symlink for $src"
+        ln -s "$src" "$dest"
+    fi
 }
 
 backup() {
-    BACKUP_DIR=$HOME/dotfiles-backup
+    BACKUP_DIR="$HOME/dotfiles-backup"
 
     echo "Creating backup directory at $BACKUP_DIR"
     mkdir -p "$BACKUP_DIR"
 
-    for file in $(get_linkables); do
-        filename=".$(basename "$file" '.symlink')"
-        target="$HOME/$filename"
-        if [ -f "$target" ]; then
-            echo "backing up $filename"
-            cp "$target" "$BACKUP_DIR"
-        else
-            warning "$filename does not exist at this location or is a symlink"
-        fi
-    done
+    zshenv="$HOME/.zshenv"
+    if [ -f "$zshenv" ]; then
+        echo "backing up $zshenv"
+        cp "$zshenv" "$BACKUP_DIR"
+    else
+        warning "$zshenv does not exist at this location or is a symlink"
+    fi
 
-    for filename in "$HOME/.config/nvim" "$HOME/.vim" "$HOME/.vimrc"; do
-        if [ ! -L "$filename" ]; then
-            echo "backing up $filename"
-            cp -rf "$filename" "$BACKUP_DIR"
+    configs=$(find "$DOTFILES/config" -maxdepth 1 2>/dev/null)
+    for config in $configs; do
+        if [ ! -d "$config" ]; then
+            echo "backing up $config"
+            cp -rf "$cofig" "$BACKUP_DIR"
         else
-            warning "$filename does not exist at this location or is a symlink"
+            warning "$config does not exist at this location or is a symlink"
         fi
     done
 }
@@ -65,49 +80,17 @@ backup() {
 setup_symlinks() {
     title "Creating symlinks"
 
-    for file in $(get_linkables) ; do
-        target="$HOME/.$(basename "$file" '.symlink')"
-        if [ -e "$target" ]; then
-            info "~${target#$HOME} already exists..."
-            read -p "Are you sure you want to overwrite? (Y/n): " answer
-            case $answer in
-                "" | "Y" | "y" | "Yes" | "yes" )
-                    rm "$target"
-                    info "Creating symlink for $file"
-                    ln -s "$file" "$target"
-                    ;;
-            esac
-        else
-            info "Creating symlink for $file"
-            ln -s "$file" "$target"
-        fi
-    done
+    create_symlink "$DOTFILES/config/zsh/.zshenv" "$HOME/.zshenv"
 
-    echo -e
     info "installing to ~/.config"
     if [ ! -d "$HOME/.config" ]; then
         info "Creating ~/.config"
         mkdir -p "$HOME/.config"
     fi
 
-    config_files=$(find "$DOTFILES/config" -maxdepth 1 2>/dev/null)
-    for config in $config_files; do
-        target="$HOME/.config/$(basename "$config")"
-        answer="y"
-        if [ -e "$target" ]; then
-            info "~${target#$HOME} already exists..."
-            read -p "Are you sure you want to overwrite? (Y/n): " answer
-            case $answer in
-                "" | "Y" | "y" | "Yes" | "yes" )
-                    rm "$target"
-                    info "Creating symlink for $config"
-                    ln -s "$config" "$target"
-                    ;;
-            esac
-        else
-            info "Creating symlink for $config"
-            ln -s "$config" "$target"
-        fi
+    configs=$(find "$DOTFILES/config" -maxdepth 1 2>/dev/null)
+    for config in $configs; do
+        create_symlink "$config" "$HOME/.config/$(basename "$config")"
     done
 }
 
@@ -191,10 +174,10 @@ setup_completion() {
     title "Configuring shell completion script for Zsh"
 
     info "adding _limactl"
-    limactl completion zsh > $(brew --prefix)/share/zsh/site-functions/_limactl
+    limactl completion zsh >$(brew --prefix)/share/zsh/site-functions/_limactl
 
     info "adding _sheldon"
-    sheldon completions --shell zsh > $(brew --prefix)/share/zsh/site-functions/_sheldon
+    sheldon completions --shell zsh >$(brew --prefix)/share/zsh/site-functions/_sheldon
 }
 
 setup_macos() {
@@ -261,46 +244,46 @@ fetch_catppuccin_theme() {
 }
 
 case "$1" in
-    backup)
-        backup
-        ;;
-    link)
-        setup_symlinks
-        ;;
-    homebrew)
-        setup_homebrew
-        ;;
-    git)
-        setup_git
-        ;;
-    shell)
-        setup_shell
-        ;;
-    terminfo)
-        setup_terminfo
-        ;;
-    comp)
-        setup_completion
-        ;;
-    macos)
-        setup_macos
-        ;;
-    catppuccin)
-        fetch_catppuccin_theme
-        ;;
-    all)
-        setup_symlinks
-        setup_homebrew
-        setup_git
-        setup_shell
-        setup_terminfo
-        setup_completion
-        setup_macos
-        ;;
-    *)
-        echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|git|shell|terminfo|comp|macos|all}\n"
-        exit 1
-        ;;
+backup)
+    backup
+    ;;
+link)
+    setup_symlinks
+    ;;
+homebrew)
+    setup_homebrew
+    ;;
+git)
+    setup_git
+    ;;
+shell)
+    setup_shell
+    ;;
+terminfo)
+    setup_terminfo
+    ;;
+comp)
+    setup_completion
+    ;;
+macos)
+    setup_macos
+    ;;
+catppuccin)
+    fetch_catppuccin_theme
+    ;;
+all)
+    setup_symlinks
+    setup_homebrew
+    setup_git
+    setup_shell
+    setup_terminfo
+    setup_completion
+    setup_macos
+    ;;
+*)
+    echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|git|shell|terminfo|comp|macos|all}\n"
+    exit 1
+    ;;
 esac
 
 echo -e

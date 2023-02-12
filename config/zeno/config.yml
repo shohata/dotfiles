@@ -1,0 +1,34 @@
+snippets:
+    - name: g
+      keyword: g
+      snippet: git
+
+    - name: yyyymmdd
+      keyword: yyyymmdd
+      snippet: date "+%Y%m%d"
+      evaluate: true
+      global: true
+
+    - name: git c
+      keyword: c
+      snippet: commit
+      context:
+          lbuffer: ^git\s
+
+    - name: git push -f
+      keyword: -f
+      snippet: --force-with-lease
+      context:
+          lbuffer: '^git(\s+\S+)*\s+push\s'
+
+    - name: ..
+      keyword: ..
+      snippet: cd ..
+
+    - name: ../..
+      keyword: ../..
+      snippet: cd ../..
+
+    - name: ../../..
+      keyword: ../../..
+      snippet: cd ../../..

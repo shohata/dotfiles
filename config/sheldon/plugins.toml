@@ -2,34 +2,43 @@ shell = "zsh"
 
 apply = ["defer"]
 
+[templates]
+defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
+
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
 apply = ["source"]
 
-[templates]
-defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
+[plugins.spaceship]
+github = "spaceship-prompt/spaceship-prompt"
+apply = ["source"]
 
-[plugins.zsh-syntax-highlighting]
-github = "zsh-users/zsh-syntax-highlighting"
+[plugins.zeno]
+github = "yuki-yano/zeno.zsh"
+use = ["{{ name }}.zsh"]
+apply = ["source"]
+
+[plugins.fast-syntax-highlighting]
+github = "zdharma-continuum/fast-syntax-highlighting"
 
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{ name }}.zsh"]
 
-[plugins.zsh-completions]
-github = "zsh-users/zsh-completions"
-
-[plugins.zsh-history-search-multi-word]
-github = "zdharma/history-search-multi-word"
-
-[plugins.fzf-tab]
-github = "Aloxaf/fzf-tab"
-
-[plugins.asdf]
-github = "asdf-vm/asdf"
+[plugins.zsh-replace-multiple-dots]
+github = "momo-lab/zsh-replace-multiple-dots"
 
 [plugins.aws_zsh_completer]
 remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
 
-[plugins.spaceship]
-github = "spaceship-prompt/spaceship-prompt"
+[plugins.dotfiles-zsh-config]
+local = "~/.config/zsh/config"
+use = ["init.zsh"]
+apply = ["source"]
+
+[plugins.dotfiles-zsh-lazy-config]
+local = "~/.config/zsh/config"
+use = ["{!init,*}.zsh"]
+
+[plugins.dotfiles-zsh-aliases]
+local = "~/.config/zsh/aliases"

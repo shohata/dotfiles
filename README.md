@@ -93,20 +93,20 @@ If you don't care about that, you can ignore this command.
 
 The `macos` command sets up macOS-specific configurations using the `defaults write` commands to change default values for macOS.
 
-- Finder: show all filename extensions
-- show hidden files by default
-- only use UTF-8 in Terminal.app
-- expand save dialog by default
-- Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
-- Enable subpixel font rendering on non-Apple LCDs
-- Use current directory as default search scope in Finder
-- Show Path bar in Finder
-- Show Status bar in Finder
-- Disable press-and-hold for keys in favor of key repeat
-- Set a blazingly fast keyboard repeat rate
-- Set a shorter Delay until key repeat
-- Enable tap to click (Trackpad)
-- Enable Safari’s debug menu
+-   Finder: show all filename extensions
+-   show hidden files by default
+-   only use UTF-8 in Terminal.app
+-   expand save dialog by default
+-   Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
+-   Enable subpixel font rendering on non-Apple LCDs
+-   Use current directory as default search scope in Finder
+-   Show Path bar in Finder
+-   Show Status bar in Finder
+-   Disable press-and-hold for keys in favor of key repeat
+-   Set a blazingly fast keyboard repeat rate
+-   Set a shorter Delay until key repeat
+-   Enable tap to click (Trackpad)
+-   Enable Safari’s debug menu
 
 ### `all`
 
@@ -121,22 +121,22 @@ You must run that one manually.
 
 The prompt for ZSH is configured in the `zshrc.symlink` file and performs the following operations.
 
-- Sets `EDITOR` to `nvim`
-- Loads any `~/.terminfo` setup
-- Sets `CODE_DIR` to `~/Developer`. This can be changed to the location you use to put your git checkouts, and enables fast `cd`-ing into it via the `c` command
-- Recursively searches the `$DOTFILES/zsh` directory for any `.zsh` files and sources them
-- Sources a `~/.localrc`, if available for configuration that is machine-specific and/or should not ever be checked into git
-- Adds `~/bin` and `$DOTFILES/bin` to the `PATH`
+-   Sets `EDITOR` to `nvim`
+-   Loads any `~/.terminfo` setup
+-   Sets `CODE_DIR` to `~/Developer`
+-   Sources a `~/.zshrc.local`, if available for configuration that is machine-specific and/or should not ever be checked into git
+-   Adds `~/.local/bin` and `$DOTFILES/config/scripts` to the `PATH`
 
 ### ZSH plugins
 
-There are a number of plugins in use for ZSH, and they are installed and maintained separately via the `zfetch` command. `zfetch` is a custom plugin manager available [here](./zsh/functions/zfetch). The plugins that are used are listed in the `.zshrc` and include
+All required plugins are installed using [sheldon](https://github.com/rossmacarthur/sheldon) that is a fast, configurable zsh plugin manager.
 
-- [zsh-async](https://github.com/mafredri/zsh-async async.plugin.zsh)
-- [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
-- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
-- [zsh-npm-scripts-autocomplete](https://github.com/grigorii-zander/zsh-npm-scripts-autocomplete)
-- [fzf-tab](https://github.com/Aloxaf/fzf-tab)
+-   [zsh-defer](https://github.com/mafredri/zsh-async async.plugin.zsh)
+-   [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+-   [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+-   [zsh-completions](https://github.com/zsh-users/zsh-completions)
+-   [history-search-multi-word](https://github.com/zdharma-continuum/history-search-multi-word)
+-   [fzf-tab](https://github.com/Aloxaf/fzf-tab)
 
 Additional plugins can be added to the `~/.zshrc`, or to `~/.localrc` if you want them to stay out of git.
 
@@ -158,7 +158,7 @@ The simplest way to install Neovim is to install it from homebrew.
 brew install neovim
 ```
 
-However, it was likely installed already if you ran the `./install.sh brew` command provided in the dotfiles.
+However, it was likely installed already if you ran the `./install.sh homebrew` command provided in the dotfiles.
 
 All of the configuration for Neovim starts at `config/nvim/init.lua`, which is symlinked into the `~/.config/nvim` directory.
 
@@ -169,7 +169,7 @@ All of the configuration for Neovim starts at `config/nvim/init.lua`, which is s
 ### Installing plugins
 
 On the first run, all required plugins should automaticaly by installed by
-[lazy.nvim](https://github.com/folke/lazy.nvim), a plugin manager for neovim.
+[packer.nvim](https://github.com/wbthomason/packer.nvim), a plugin manager for neovim.
 
 All plugins are listed in [plugins.lua](./config/nvim/lua/plugins.lua).
 When a plugin is added, it will automatically be installed by lazy.nvim.
@@ -199,7 +199,7 @@ Enter new session name: open-source
 This configuration provides a bit of style to the tmux bar, along with some additional data such as the currently playing song (from Apple Music or Spotify), the system name, the session name, and the current time.
 
 > **Note**
-> It also changes the prefix from `⌃-b` to `⌃-a` (⌃ is the _control_ key).
+> It also changes the prefix from `⌃-b` to `⌃-j` (⌃ is the _control_ key).
 > This is because I tend to remap the Caps Lock button to Control, and then having the prefix makes more sense.
 
 ### tmux key commands
