@@ -1,185 +1,236 @@
-local utils = require("utils")
-local theme = require('theme')
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+local packerpath = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if not vim.loop.fs_stat(packerpath) then
   vim.fn.system({
     "git",
     "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath
+    "--depth=1",
+    "https://github.com/wbthomason/packer.nvim",
+    packerpath,
   })
 end
-vim.opt.rtp:prepend(lazypath)
+vim.opt.rtp:prepend(packerpath)
 
-require("lazy").setup({
-  "mattn/emmet-vim", -- easy commenting
-  "tpope/vim-commentary", -- bracket mappings for moving between buffers, quickfix items, etc.
-  "tpope/vim-unimpaired",
-  -- mappings to easily delete, change and add such surroundings in pairs, such as quotes, parens, etc.
-  "tpope/vim-surround", -- endings for html, xml, etc. - ehances surround
-  "tpope/vim-ragtag", -- substitution and abbreviation helpers
-  "tpope/vim-abolish", -- enables repeating other supported plugins with the . command
-  "tpope/vim-repeat",
-  -- single/multi line code handler: gS - split one line into multiple, gJ - combine multiple lines into one
-  "AndrewRadev/splitjoin.vim",
-  { "junegunn/goyo.vim", keys = { { "<leader>w", "<cmd>Goyo<cr>" } } },
-  -- detect indent style (tabs vs. spaces)
-  "tpope/vim-sleuth", -- setup editorconfig
-  "editorconfig/editorconfig-vim", -- fugitive
-  {
-    "tpope/vim-fugitive",
-    lazy = false,
-    keys = {
-      { "<leader>gr", "<cmd>Gread<cr>", desc = "read file from git" },
-      { "<leader>gb", "<cmd>G blame<cr>", desc = "read file from git" }
+return require("packer").startup(function(use)
+  use({
+    {
+      "wbthomason/packer.nvim", -- package manager
+      opt = true,
     },
-    dependencies = { "tpope/vim-rhubarb" }
-  }, -- general plugins
-  -- match tags in html, similar to paren support
-  { "gregsexton/MatchTag", ft = "html" }, -- html5 support
-  { "othree/html5.vim", ft = "html" }, -- pug / jade support
-  { "digitaltoad/vim-pug", ft = { "jade", "pug" } }, -- nunjucks support
-  -- Plug "niftylettuce/vim-jinja"
-  { "Glench/Vim-Jinja2-Syntax", ft = { "jinja", "nunjucks" } }, -- edit quickfix list
-  { "itchyny/vim-qfedit", event = "VeryLazy" }, -- liquid support
-  "tpope/vim-liquid",
-  { "othree/yajs.vim", ft = { "javascript", "javascript.jsx", "html", "typescript", "typescriptreact" } },
-  -- Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'html'] }
-  { "moll/vim-node", ft = { "javascript", "typescript" } },
-  { "MaxMEllon/vim-jsx-pretty", config = function() vim.g.vim_jsx_pretty_highlight_close_tag = 1 end },
-  { "leafgarland/typescript-vim", ft = { "typescript", "typescript.tsx" } },
-  { "wavded/vim-stylus", ft = { "stylus", "markdown" } },
-  { "jxnblk/vim-mdx-js", ft = "mdx" },
-  { "groenewege/vim-less", ft = "less" },
-  { "hail2u/vim-css3-syntax", ft = "css" },
-  { "cakebaker/scss-syntax.vim", ft = "scss" },
-  { "stephenway/postcss.vim", ft = "css" },
-  { "udalov/kotlin-vim", ft = "kotlin" },
-  { "elzr/vim-json", ft = "json", config = function() vim.g.vim_json_syntax_conceal = 0 end },
-  { "ekalinin/Dockerfile.vim", ft = "Dockerfile" },
-  "jparise/vim-graphql",
-  { "preservim/vim-markdown", ft = "markdown", dependencies = { "godlygeek/tabular" } },
-  {
-    "hrsh7th/vim-vsnip",
-    config = function()
-      local snippet_dir = os.getenv("DOTFILES") .. "/config/nvim/snippets"
-      vim.g.vsnip_snippet_dir = snippet_dir
-      vim.g.vsnip_filetypes = {
-        javascriptreact = { "javascript" },
-        typescriptreact = { "typescript" },
-        ["typescript.tsx"] = { "typescript" }
-      }
-    end
-  },
-  "hrsh7th/cmp-vsnip",
-  "hrsh7th/vim-vsnip-integ", -- add color highlighting to hex values
-  {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup({ '*' }, {
-        RGB = true,
-        RRGGBB = true,
-        names = true,
-        RRGGBBAA = true,
-        rgb_fn = true,
-        hsl_fn = true,
-        css = true,
-        css_fn = true
-      })
-    end
-  }, -- use devicons for filetypes
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
-      {
+    "tpope/vim-commentary", -- easy commenting
+    "tpope/vim-unimpaired", -- bracket mappings for moving between buffers, quickfix items, etc.
+    "tpope/vim-surround", -- mappings to easily delete, change and add such surroundings in pairs, such as quotes, parens, etc.
+    "tpope/vim-ragtag", -- endings for html, xml, etc. - ehances surround
+    "tpope/vim-abolish", -- substitution and abbreviation helpers
+    "tpope/vim-repeat", -- enables repeating other supported plugins with the . command
+    "tpope/vim-sleuth", -- detect indent style (tabs vs. spaces)
+    "tpope/vim-fugitive", -- fugitive
+    "mattn/emmet-vim", -- porvide support for expanding abbreviations similar to emmet
+    "editorconfig/editorconfig-vim", -- setup editorconfig
+    "itchyny/vim-qfedit", -- freely edit quickfix/location list
+    "AndrewRadev/splitjoin.vim", -- single/multi line code handler: gS - split one line into multiple, gJ - combine multiple lines into one
+    {
+      "ekalinin/Dockerfile.vim", -- syntax for docker
+      ft = "Dockerfile",
+    },
+    {
+      "preservim/vim-markdown", -- syntax for markdown
+      ft = "markdown",
+      requires = {
+        "godlygeek/tabular",
+      },
+    },
+    {
+      "hrsh7th/vim-vsnip-integ", -- provide some plugins integration
+      requires = {
+        "hrsh7th/vim-vsnip",
+      },
+    },
+    {
+      "hrsh7th/vim-vsnip", -- vscode snippet features
+      config = function()
+        local snippet_dir = os.getenv("DOTFILES") .. "/config/nvim/snippets"
+        vim.g.vsnip_snippet_dir = snippet_dir
+        vim.g.vsnip_filetypes = {
+          javascriptreact = { "javascript" },
+          typescriptreact = { "typescript" },
+        }
+      end,
+    },
+    {
+      "norcalli/nvim-colorizer.lua", -- add color highlighting to hex values
+      config = function()
+        require("colorizer").setup({ "*" }, {
+          RGB = true,
+          RRGGBB = true,
+          names = true,
+          RRGGBBAA = true,
+          rgb_fn = true,
+          hsl_fn = true,
+          css = true,
+          css_fn = true
+        })
+      end,
+    },
+    {
+      "nvim-neo-tree/neo-tree.nvim", -- browse the file system and other tree like structures
+      branch = "v2.x",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
+        "MunifTanjim/nui.nvim",
         "s1n7ax/nvim-window-picker",
-        -- tag = "v1.*",
-        config = function()
-          require("window-picker").setup({
-            autoselect_one = true,
-            include_current = false,
-            filter_rules = {
-              bo = { filetype = { "nep-tree", "neo-tree-popup", "notify" }, buftype = { "terminal", "quickfix" } }
+      },
+    },
+    {
+      "s1n7ax/nvim-window-picker",
+      tag = "v1.*",
+      config = function()
+        require("window-picker").setup({
+          autoselect_one = true,
+          include_current = false,
+          filter_rules = {
+            bo = {
+              filetype = { "nep-tree", "neo-tree-popup", "notify" },
+              buftype = { "terminal", "quickfix" },
             },
-            border = { style = "rounded", highlight = "Normal" },
-            other_win_hl_color = "#e35e4f"
-          })
-        end
+          },
+          border = {
+            style = "rounded",
+            highlight = "Normal",
+          },
+          other_win_hl_color = "#e35e4f",
+        })
+      end,
+    },
+    {
+      "lewis6991/gitsigns.nvim", -- show git information in the gutter
+      config = function()
+        require("gitsigns").setup()
+      end,
+    },
+    {
+      "williamboman/mason.nvim", -- manage external editor tools such as LSP servers, DAP servers, linters, etc.
+      config = function()
+        require("mason").setup()
+      end,
+    },
+    {
+      "jayp0521/mason-null-ls.nvim", -- bridge mson.nvim with the null-ls plugin
+      after = "mason.nvim",
+      config = function()
+        require("mason-null-ls").setup({
+          ensure_installed = {
+            -- Opt to list sources here, when available in mason.
+            "stylua",
+            "jq",
+          },
+          automatic_installation = false,
+          automatic_setup = true, -- Recommended, but optional
+        })
+      end,
+    },
+    {
+      "jose-elias-alvarez/null-ls.nvim", -- use a language server to inject LSP diagnostics, code actions, etc.
+      after = "mason-null-ls.nvim",
+      config = function()
+        require("null-ls").setup({
+          sources = {
+            -- Anything not supported by mason.
+          },
+        })
+      end,
+    },
+    {
+      "neovim/nvim-lspconfig",
+      requires = {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+      },
+    },
+    {
+      "hrsh7th/nvim-cmp", -- neovim completion
+      requires = {
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
+        "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-vsnip",
+        "hrsh7th/vim-vsnip",
+        "neovim/nvim-lspconfig", -- configure the neovim LSP client
+      },
+      config = function()
+        require("cmp").setup({
+          snippet = {
+            expand = function(args)
+              vim.fn["vsnip#anonymous"](args.body)
+            end,
+          },
+        })
+      end,
+    },
+    {
+      "nvim-treesitter/nvim-treesitter", -- provide a simple and easy way to use tree-sitter
+      run = ":TSUpdate",
+    },
+    "onsails/lspkind-nvim", -- add vscode-like pictograms
+    "feline-nvim/feline.nvim", -- show a minimal, stylish and customizable status line
+    {
+      "windwp/nvim-autopairs", -- automatically complete brackets/parens/quotes
+      config = function()
+        require("nvim-autopairs").setup({})
+      end,
+    },
+    {
+      "alvarosevilla95/luatab.nvim", -- style the tabline without taking over how tabs and buffers work in neovim
+      requires = {
+        "kyazdani42/nvim-web-devicons",
+      },
+    },
+    "github/copilot.vim", -- enable copilot support for neovim
+    "stevearc/dressing.nvim", -- improve the default neovim interfaces, such as refactoring
+    {
+      "nvim-telescope/telescope.nvim", -- highly extendable fuzzy finder over lists
+      tag = "0.1.1",
+      requires = {
+        "nvim-lua/plenary.nvim",
       }
-    }
-  },
-  "nvim-tree/nvim-web-devicons", -- fast lau file drawer
-  { "kyazdani42/nvim-tree.lua" }, -- Show git information in the gutter
-  { "lewis6991/gitsigns.nvim" },
-  {
-    "williamboman/mason.nvim",
-    dependencies = {
-      "williamboman/mason-lspconfig.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
-      "jayp0521/mason-null-ls.nvim"
-    }
-  },
-  {
-    "neovim/nvim-lspconfig",
-    lazy = false,
-    dependencies = {
-      -- Helpers to install LSPs and maintain them
-      "mason.nvim",
-      "williamboman/mason-lspconfig.nvim"
-    }
-  }, -- neovim completion
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = { "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-nvim-lua", "hrsh7th/cmp-buffer", "hrsh7th/cmp-path" }
-  }, -- treesitter enables an AST-like understanding of files
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    dependencies = {
-      -- show treesitter nodes
-      "nvim-treesitter/playground", -- enable more advanced treesitter-aware text objects
-      "nvim-treesitter/nvim-treesitter-textobjects", -- add rainbow highlighting to parens and brackets
-      "p00f/nvim-ts-rainbow",
-      "JoosepAlviste/nvim-ts-context-commentstring"
-    }
-  }, -- show nerd font icons for LSP types in completion menu
-  "onsails/lspkind-nvim", -- status line plugin
-  "feline-nvim/feline.nvim", -- automatically complete brackets/parens/quotes
-  { "windwp/nvim-autopairs", config = true },
-  -- Style the tabline without taking over how tabs and buffers work in Neovim
-  { "alvarosevilla95/luatab.nvim", config = true }, -- enable copilot support for Neovim
-  {
-    "github/copilot.vim"
-  }, -- improve the default neovim interfaces, such as refactoring
-  { "stevearc/dressing.nvim", event = "VeryLazy" }, -- Navigate a code base with a really slick UI
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim", -- Power telescope with FZF
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      "nvim-telescope/telescope-rg.nvim",
-      "nvim-telescope/telescope-node-modules.nvim"
-    }
-  }, -- Startup screen for Neovim
-  { "startup-nvim/startup.nvim" }, -- fzf
-  { "junegunn/fzf.vim", dependencies = { { dir = vim.env.HOMEBREW_PREFIX .. "/opt/fzf" } } },
-  {
-    "folke/trouble.nvim",
-    config = true,
-    keys = {
-      { "<leader>xx", "<cmd>TroubleToggle<cr>" },
-      { "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>" },
-      { "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>" },
-      { "<leader>xq", "<cmd>TroubleToggle quickfix<cr>" },
-      { "<leader>xl", "<cmd>TroubleToggle loclist<cr>" }
-    }
-  },
-  { "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000 },
-  { "b0o/incline.nvim", config = { hide = { cursorline = false, focused_win = false, only_win = true } } }
-}, { ui = { border = theme.border } })
+    },
+    "startup-nvim/startup.nvim", -- fully customizable greeter for neovim
+    {
+      "junegunn/fzf", -- fzf
+      run = ":call fzf#install()",
+    },
+    {
+      "junegunn/fzf.vim", -- basic wrappper function for neovim
+      requires = {
+        "junegunn/fzf",
+      },
+    },
+    {
+      "folke/trouble.nvim", -- show diagnostics, references, telescope results, quickfix and location lists
+      requires = "nvim-tree/nvim-web-devicons",
+      config = function()
+        require("trouble").setup {
+          -- your configuration comes here
+          -- or leave it empty to use the default settings
+        }
+      end
+    },
+    {
+      "catppuccin/nvim", -- pastel theme that aims to be the middle ground between low and high contrast themes
+      as = "catppuccin",
+    },
+    {
+      "b0o/incline.nvim", -- lightweight floating statuslines, best used neovim's global statusline
+      config = function()
+        require("incline").setup({
+          hide = {
+            cursorline = false,
+            focused_win = false,
+            only_win = true,
+          }
+        })
+      end,
+    },
+  })
+end)
