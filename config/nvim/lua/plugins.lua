@@ -118,7 +118,6 @@ return require("packer").startup({
           "williamboman/mason.nvim", -- manage external editor tools such as LSP servers, DAP servers, linters, etc.
           "jose-elias-alvarez/null-ls.nvim", -- use a language server to inject LSP diagnostics, code actions, etc.
         },
-        end,
       },
       {
         "neovim/nvim-lspconfig",
@@ -221,7 +220,7 @@ return require("packer").startup({
         "folke/trouble.nvim", -- show diagnostics, references, telescope results, quickfix and location lists
         requires = {
           "nvim-tree/nvim-web-devicons",
-        }
+        },
         config = function()
           require("trouble").setup({
             -- your configuration comes here
