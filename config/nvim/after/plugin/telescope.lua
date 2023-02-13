@@ -13,7 +13,7 @@ telescope.setup({
         -- ["<C-\\|>"] = actions.select_vertical, -- open selection in new vertical split
         ["<C-t>"] = actions.select_tab, -- open selection in new tab
         ["<C-y>"] = actions.preview_scrolling_up,
-        ["<C-e>"] = actions.preview_scrolling_down
+        ["<C-e>"] = actions.preview_scrolling_down,
       }
     },
     vimgrep_arguments = {
@@ -24,7 +24,7 @@ telescope.setup({
       "--line-number",
       "--column",
       "--smart-case",
-      "--trim"
+      "--trim",
     },
     prompt_prefix = "   ",
     selection_caret = "  ",
@@ -38,7 +38,7 @@ telescope.setup({
       vertical = { mirror = false },
       width = 0.87,
       height = 0.80,
-      preview_cutoff = 120
+      preview_cutoff = 120,
     },
     file_sorter = require("telescope.sorters").get_fuzzy_file,
     file_ignore_patterns = { "node_modules" },
@@ -54,12 +54,21 @@ telescope.setup({
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
     -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker
+    buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
   },
-  pickers = { find_files = { find_command = { "fd", "--type", "f", "--hidden", "--strip-cwd-prefix" } } },
+  pickers = {
+    find_files = {
+      find_command = { "fd", "--type", "f", "--hidden", "--strip-cwd-prefix" },
+    },
+  },
   extensions = {
-    fzf = { fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = "smart_case" }
-  }
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case",
+    },
+  },
 })
 
 telescope.load_extension("fzf")

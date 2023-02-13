@@ -5,4 +5,4 @@ config/nvim/shada
 Brewfile.lock.json
 lazy-lock.json
 config/kitty/kitty-overrides.conf
-
+packer_compiled.lua
