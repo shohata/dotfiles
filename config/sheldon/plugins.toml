@@ -10,8 +10,22 @@ autoload = "{% for file in files %}autoload -Uz \"{{ file }}\"\n{% endfor %}"
 github = "romkatv/zsh-defer"
 apply = ["source"]
 
-[plugins.compinit]
-inline = "autoload -Uz compinit && zsh-defer compinit"
+[plugins.dotfiles-zsh-config]
+local = "~/.config/zsh/config"
+use = ["main.zsh"]
+apply = ["source"]
+
+[plugins.dotfiles-zsh-lazy-config]
+local = "~/.config/zsh/config"
+use = ["{!sync,*}.zsh"]
+
+[plugins.dotfiles-zsh-aliases]
+local = "~/.config/zsh/aliases"
+
+[plugins.dotfiles-zsh-functions]
+local = "~/.config/zsh/functions"
+use = ["*"]
+apply = ["autoload"]
 
 [plugins.spaceship]
 github = "spaceship-prompt/spaceship-prompt"
@@ -38,14 +52,3 @@ github = "asdf-vm/asdf"
 
 [plugins.aws_zsh_completer]
 remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
-
-[plugins.dotfiles-functions]
-local = "~/.zsh/functions"
-use = ["*"]
-apply = ["autoload"]
-
-[plugins.dotfiles-aliases]
-local = "~/.zsh/aliases"
-
-[plugins.dotfiles-config]
-local = "~/.zsh/config"

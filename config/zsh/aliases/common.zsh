@@ -24,10 +24,17 @@ alias cleanup='find . -name "*.DS_Store" -type f -ls -delete'
 alias clsym='find -L . -name . -o -type d -prune -o -type l -exec rm {} +'
 
 
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+    colorflag="--color"
+else # macOS `ls`
+    colorflag="-G"
+fi
+
 # use exa if available
 if [[ -x "$(command -v exa)" ]]; then
-  alias ll='exa --icons --git --long'
   alias l='exa --icons --git --all --long'
+  alias ll='exa --icons --git --long'
 else
   alias l='ls -lah $colorflag'
   alias ll='ls -lFh $colorflag'
