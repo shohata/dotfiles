@@ -1,0 +1,2 @@
+#!/bin/zsh
+cd $CODE_DIR/$1
