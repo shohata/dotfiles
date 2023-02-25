@@ -14,10 +14,10 @@ if OS.mac?
     cask "visual-studio-code"   # Open-source code editor
 
     # Fonts
-    cask "font-fira-code"
     cask "font-jetbrains-mono"
-    cask "font-cascadia-mono"
-    cask "font-3270-nerd-font"
+    cask "font-jetbrains-mono-nerd-font"
+    cask "font-cousine"
+    cask "font-cousine-nerd-font"
 elsif OS.linux?
     brew "xclip"        # Access to clipboard (similar to pbcopy/pbpaste)
 end

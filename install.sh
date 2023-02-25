@@ -31,18 +31,15 @@ success() {
     echo -e "${COLOR_GREEN}$1${COLOR_NONE}"
 }
 
-get_linkables() {
-    find -H "$DOTFILES" -maxdepth 3 -name '*.symlink'
-}
-
 backup() {
     BACKUP_DIR=$HOME/dotfiles-backup
 
     echo "Creating backup directory at $BACKUP_DIR"
     mkdir -p "$BACKUP_DIR"
 
-    for file in $(get_linkables); do
-        filename=".$(basename "$file" '.symlink')"
+    zsh_files=$(find "$DOTFILES/zsh" -maxdepth 1 -name '*.zsh')
+    for file in $zsh_files; do
+        filename=".$(basename "$file" '.zsh')"
         target="$HOME/$filename"
         if [ -f "$target" ]; then
             echo "backing up $filename"
@@ -52,7 +49,8 @@ backup() {
         fi
     done
 
-    for filename in "$HOME/.config/nvim" "$HOME/.vim" "$HOME/.vimrc"; do
+    config_files=$(find "$DOTFILES/config" -maxdepth 1 2>/dev/null)
+    for filename in $config_files "$HOME/.vim" "$HOME/.vimrc"; do
         if [ ! -L "$filename" ]; then
             echo "backing up $filename"
             cp -rf "$filename" "$BACKUP_DIR"
@@ -65,8 +63,9 @@ backup() {
 setup_symlinks() {
     title "Creating symlinks"
 
-    for file in $(get_linkables) ; do
-        target="$HOME/.$(basename "$file" '.symlink')"
+    zsh_files=$(find "$DOTFILES/zsh" -maxdepth 1 -name '*.zsh')
+    for file in $zsh_files ; do
+        target="$HOME/.$(basename "$file" '.zsh')"
         if [ -e "$target" ]; then
             info "~${target#$HOME} already exists..."
             read -p "Are you sure you want to overwrite? (Y/n): " answer

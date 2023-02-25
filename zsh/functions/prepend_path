@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 [[ ! -d "$1" ]] && return
 
 path=(
