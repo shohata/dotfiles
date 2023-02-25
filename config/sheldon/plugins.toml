@@ -39,12 +39,12 @@ github = "asdf-vm/asdf"
 remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
 
 [plugins.dotfiles-functions]
-local = "$DOTFILES/zsh/functions"
+local = "~/.zsh/functions"
 apply = ["autoload"]
 
 [plugins.dotfiles-aliases]
-local = "$DOTFILES/zsh/aliases"
+local = "~/.zsh/aliases"
 apply = ["autoload"]
 
 [plugins.dotfiles-config]
-local = "$DOTFILES/zsh/config"
+local = "~/.zsh/config"

@@ -62,14 +62,33 @@ backup() {
 
 setup_symlinks() {
     title "Creating symlinks"
+    
+    zsh_dir="$DOTFILES/zsh"
+    target="$HOME/.zsh"
+    if [ -e "$target" ]; then
+        answer="n"
+        info "~${target#$HOME} already exists..."
+        read -p "Are you sure you want to overwrite? (Y/n): " answer
+        case "$answer" in
+            "" | "Y" | "y" | "Yes" | "yes")
+                rm -rf "$target"
+                info "Creating symlink for $zsh_dir"
+                ln -s "$zsh_dir" "$target"
+                ;;
+        esac
+    else
+        info "Creating symlink for $zsh_dir"
+        ln -s "$zsh_dir" "$target"
+    fi
 
     zsh_files=$(find "$DOTFILES/zsh" -maxdepth 1 -name '*.zsh')
     for file in $zsh_files ; do
         target="$HOME/.$(basename "$file" '.zsh')"
         if [ -e "$target" ]; then
+            answer="n"
             info "~${target#$HOME} already exists..."
             read -p "Are you sure you want to overwrite? (Y/n): " answer
-            case $answer in
+            case "$answer" in
                 "" | "Y" | "y" | "Yes" | "yes" )
                     rm "$target"
                     info "Creating symlink for $file"
@@ -89,16 +108,16 @@ setup_symlinks() {
         mkdir -p "$HOME/.config"
     fi
 
-    config_files=$(find "$DOTFILES/config" -maxdepth 1 2>/dev/null)
-    for config in $config_files; do
+    config_dirs=$(find "$DOTFILES/config" -maxdepth 1 2>/dev/null)
+    for config in $config_dirs; do
         target="$HOME/.config/$(basename "$config")"
-        answer="y"
         if [ -e "$target" ]; then
+            answer="n"
             info "~${target#$HOME} already exists..."
             read -p "Are you sure you want to overwrite? (Y/n): " answer
-            case $answer in
+            case "$answer" in
                 "" | "Y" | "y" | "Yes" | "yes" )
-                    rm "$target"
+                    rm -rf "$target"
                     info "Creating symlink for $config"
                     ln -s "$config" "$target"
                     ;;
