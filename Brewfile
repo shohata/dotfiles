@@ -1,5 +1,3 @@
-# vim:ft=ruby
-
 if OS.mac?
     # taps
     tap "homebrew/cask"
@@ -33,13 +31,13 @@ brew "cmake"            # Cross-platform make
 brew "docker"           # Pack, ship and run any application as a lightweight container
 brew "docker-buildx"    # Docker CLI plugin for extended build capabilities with BuildKit
 brew "docker-compose"   # Isolated development environments using Docker
-brew "git-delta"        # A better git diff
 brew "entr"             # File watcher / Command runner
 brew "exa"              # ls alternative
 brew "fd"               # find alternative
 brew "fzf"              # Fuzzy file searcher, used in scripts and in vim
 brew "gh"               # GitHub CLI
 brew "git"              # Git version control (latest version)
+brew "git-delta"        # A better git diff
 brew "glow"             # Markdown viewer
 brew "gnupg"            # GPG
 brew "grep"             # grep (latest)
@@ -54,8 +52,14 @@ brew "luarocks"         # Package manager for the Lua programming language
 brew "neofetch"         # Pretty system info
 brew "neovim"           # A better vim
 brew "node"             # Platform built on V8 to build network applications
+brew "npm"              # Platform built on V8 to build network applications
+brew "openjdk@11"       # Development kit for the Java programming language
+brew "openjdk@17"       # Development kit for the Java programming language
+brew "openjdk@8"        # Development kit for the Java programming language
 brew "python"           # python (latst)
 brew "ripgrep"          # Very fast file searcher
+brew "sbt"              # Build tool for Scala projects
+brew "scala@2.13"       # JVM-based programming language
 brew "sheldon"          # Fast, configurable, shell plugin manager
 brew "shellcheck"       # Diagnostics for shell sripts
 brew "tmux"             # Terminal multiplexer
