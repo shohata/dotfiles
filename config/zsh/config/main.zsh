@@ -59,6 +59,8 @@ zle -N edit-command-line
 # Key Mappings
 # ----------------------------
 bindkey -e                      # use emacs key bindings
+bindkey -r '^O'                 # unbind Ctrl-o
+bindkey -r '^J'                 # unbind Ctrl-j
 bindkey "^O" edit-command-line  # edit the current command line in $EDITOR
 
 # ----------------------------
