@@ -59,7 +59,7 @@ zle -N edit-command-line
 # Key Mappings
 # ----------------------------
 bindkey -e                      # use emacs key bindings
-bindkey "jj" edit-command-line  # edit the current command line in $EDITOR
+bindkey "^O" edit-command-line  # edit the current command line in $EDITOR
 
 # ----------------------------
 # Completions
