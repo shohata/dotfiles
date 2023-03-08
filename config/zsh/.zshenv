@@ -13,11 +13,6 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # ----------------------------
-# Zsh directory
+# Zsh dot directory
 # ----------------------------
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-
-# ----------------------------
-# User configurations
-# ----------------------------
-export DOTFILES="$(dirname "$(dirname "$(readlink "${(%):-%N}")")")"

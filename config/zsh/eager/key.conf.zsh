@@ -17,9 +17,11 @@ bindkey '^O' edit-command-line
 # ----------------------------
 # zeno.zsh
 # ----------------------------
-bindkey ' ' zeno-auto-snippet
-bindkey '^M' zeno-auto-snippet-and-accept-line
-bindkey '^I' zeno-completion
-bindkey '^R' zeno-history-selection
-bindkey '^X' zeno-insert-snippet
-bindkey '^G' zeno-ghq-cd
+if [[ -n $ZENO_LOADED ]]; then
+    bindkey ' ' zeno-auto-snippet
+    bindkey '^M' zeno-auto-snippet-and-accept-line
+    bindkey '^I' zeno-completion
+    bindkey '^R' zeno-history-selection
+    #bindkey '^X' zeno-insert-snippet
+    #bindkey '^G' zeno-ghq-cd
+fi

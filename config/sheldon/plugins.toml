@@ -9,6 +9,9 @@ defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
 github = "romkatv/zsh-defer"
 apply = ["source"]
 
+[plugins.compinit]
+inline = "autoload -Uz compinit && zsh-defer compinit -d \"$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION\""
+
 [plugins.spaceship]
 github = "spaceship-prompt/spaceship-prompt"
 apply = ["source"]
@@ -17,6 +20,9 @@ apply = ["source"]
 github = "yuki-yano/zeno.zsh"
 use = ["{{ name }}.zsh"]
 apply = ["source"]
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
 
 [plugins.fast-syntax-highlighting]
 github = "zdharma-continuum/fast-syntax-highlighting"
@@ -28,17 +34,15 @@ use = ["{{ name }}.zsh"]
 [plugins.zsh-replace-multiple-dots]
 github = "momo-lab/zsh-replace-multiple-dots"
 
+[plugins.navi]
+inline = "zsh-defer eval \"$(navi widget zsh)\""
+
 [plugins.aws_zsh_completer]
 remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
 
-[plugins.dotfiles-zsh-config]
-local = "~/.config/zsh/config"
-use = ["init.zsh"]
+[plugins.dotfiles-eager]
+local = "~/.config/zsh/eager"
 apply = ["source"]
 
-[plugins.dotfiles-zsh-lazy-config]
-local = "~/.config/zsh/config"
-use = ["{!init,*}.zsh"]
-
-[plugins.dotfiles-zsh-aliases]
-local = "~/.config/zsh/aliases"
+[plugins.dotfiles-lazy]
+local = "~/.config/zsh/lazy"

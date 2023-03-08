@@ -22,6 +22,7 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 
 # Packages
+brew "awk"              # Text processing scripting language
 brew "bat"              # cat alternative
 brew "cmake"            # Cross-platform make
 brew "deno"             # Secure runtime for JavaScript and TypeScript
