@@ -1,9 +1,9 @@
+# /usr/bin/env zsh
+
 # ----------------------------
-# Reset key mappings
+# navi
 # ----------------------------
-bindkey -d          # reset key bindings
-bindkey -e          # use emacs key bindings
-bindkey -r '^J'     # unbind Ctrl-j for tmux prefix
+eval "$(navi widget zsh)"   # Ctrl+G is assigned to launching navi
 
 # ----------------------------
 # Edit command line
@@ -19,9 +19,9 @@ bindkey '^O' edit-command-line
 # ----------------------------
 if [[ -n $ZENO_LOADED ]]; then
     bindkey ' ' zeno-auto-snippet
-    bindkey '^M' zeno-auto-snippet-and-accept-line
-    bindkey '^I' zeno-completion
+    bindkey '^X' zeno-insert-snippet
     bindkey '^R' zeno-history-selection
-    #bindkey '^X' zeno-insert-snippet
+    #bindkey '^M' zeno-auto-snippet-and-accept-line
+    #bindkey '^I' zeno-completion
     #bindkey '^G' zeno-ghq-cd
 fi

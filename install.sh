@@ -80,7 +80,15 @@ backup() {
 setup_symlinks() {
     title "Creating symlinks"
 
+    info "installing to ~/.zshenv"
     create_symlink "$DOTFILES/config/zsh/.zshenv" "$HOME/.zshenv"
+
+    info "installing to ~/.local"
+    if [ ! -d "$HOME/.local" ]; then
+        info "Creating ~/.local"
+        mkdir -p "$HOME/.local"
+    fi
+    create_symlink "$DOTFILES/bin" "$HOME/.local/bin"
 
     info "installing to ~/.config"
     if [ ! -d "$HOME/.config" ]; then
@@ -88,7 +96,7 @@ setup_symlinks() {
         mkdir -p "$HOME/.config"
     fi
 
-    configs=$(find "$DOTFILES/config" -maxdepth 1 2>/dev/null)
+    configs=$(find "$DOTFILES/config" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
     for config in $configs; do
         create_symlink "$config" "$HOME/.config/$(basename "$config")"
     done
@@ -168,16 +176,6 @@ setup_terminfo() {
 
     info "adding xterm-256color-italic.terminfo"
     tic -x "$DOTFILES/resources/xterm-256color-italic.terminfo"
-}
-
-setup_completion() {
-    title "Configuring shell completion script for Zsh"
-
-    info "adding _limactl"
-    limactl completion zsh >$(brew --prefix)/share/zsh/site-functions/_limactl
-
-    info "adding _sheldon"
-    sheldon completions --shell zsh >$(brew --prefix)/share/zsh/site-functions/_sheldon
 }
 
 setup_macos() {
@@ -262,9 +260,6 @@ shell)
 terminfo)
     setup_terminfo
     ;;
-comp)
-    setup_completion
-    ;;
 macos)
     setup_macos
     ;;
@@ -277,11 +272,10 @@ all)
     setup_git
     setup_shell
     setup_terminfo
-    setup_completion
     setup_macos
     ;;
 *)
-    echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|git|shell|terminfo|comp|macos|all}\n"
+    echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|git|shell|terminfo|macos|all}\n"
     exit 1
     ;;
 esac

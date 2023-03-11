@@ -1,3 +1,5 @@
+#/usr/bin/env zsh
+
 # ----------------------------
 # less
 # ----------------------------
@@ -16,6 +18,16 @@ export LESS_TERMCAP_us="$(tput smul; tput bold; tput setaf 7)"      # begin unde
 export LESS_TERMCAP_ue="$(tput rmul; tput sgr0)"                    # end underline
 export LESS_TERMCAP_mr="$(tput rev)"                                # begin reverse-mode
 export LESS_TERMCAP_mh="$(tput dim)"                                # begin half-bright-mode
+
+# ----------------------------
+# fzf
+# ----------------------------
+if [ -f $HOME/.fzf.zsh ]; then
+  source $HOME/.fzf.zsh
+  export FZF_DEFAULT_COMMAND='fd --type f'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_DEFAULT_OPTS="--color bg:-1,bg+:-1,fg:-1,fg+:#feffff,hl:#993f84,hl+:#d256b5,info:#676767,prompt:#676767,pointer:#676767"
+fi
 
 # ----------------------------
 # SQL
@@ -45,6 +57,7 @@ export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 # ----------------------------
 # navi
 # ----------------------------
+export NAVI_CHEATS_PATH="$(navi info cheats-path)"
 export NAVI_CONFIG="$XDG_CONFIG_HOME/navi/config.yaml"
 
 # ----------------------------

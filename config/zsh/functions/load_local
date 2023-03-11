@@ -1,0 +1,4 @@
+#/usr/bin/env zsh
+
+# If a ~/.zshrc.local exists, source it
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
