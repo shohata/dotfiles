@@ -7,15 +7,16 @@ if OS.mac?
     brew "trash"                # rm, but put in the trash rather than completely delete
 
     # Applications
-    cask "kitty"                # a better terminal emulator
-    cask "imageoptim"           # A tool to optimize images
+    cask "imageoptim"           # Tool to optimize images
+    cask "kitty"                # Better terminal emulator
+    cask "obsidian"             # Knowledge base
     cask "visual-studio-code"   # Open-source code editor
 
     # Fonts
     cask "font-jetbrains-mono-nerd-font"
     cask "font-cousine-nerd-font"
 elsif OS.linux?
-    brew "xclip"        # Access to clipboard (similar to pbcopy/pbpaste)
+    brew "xclip"                # Access to clipboard (similar to pbcopy/pbpaste)
 end
 
 tap "homebrew/bundle"
@@ -26,9 +27,6 @@ brew "awk"              # Text processing scripting language
 brew "bat"              # cat alternative
 brew "cmake"            # Cross-platform make
 brew "deno"             # Secure runtime for JavaScript and TypeScript
-brew "docker"           # Pack, ship and run any application as a lightweight container
-brew "docker-buildx"    # Docker CLI plugin for extended build capabilities with BuildKit
-brew "docker-compose"   # Isolated development environments using Docker
 brew "duf"              # df alternate
 brew "exa"              # ls alternative
 brew "fd"               # find alternative
@@ -43,9 +41,6 @@ brew "grep"             # grep (latest)
 brew "hexyl"            # od alternative
 brew "htop"             # top alternative
 brew "jq"               # Work with JSON files in shell scripts
-brew "kind"             # Run local Kubernetes cluster in Docker
-brew "kubernetes-cli"   # Kubernetes command-line interface
-brew "lima"             # Linux virtual machines
 brew "lua"              # Powerful, lightweight programming language
 brew "luarocks"         # Package manager for the Lua programming language
 brew "navi"             # interactive cheatsheet tool for the command-line
@@ -62,7 +57,6 @@ brew "ripgrep"          # Very fast file searcher
 brew "sbt"              # Build tool for Scala projects
 brew "scala"            # JVM-based programming language
 brew "scala@2.13"       # Scala 2.13
-brew "sheldon"          # Fast, configurable, shell plugin manager
 brew "tmux"             # Terminal multiplexer
 brew "tree"             # Pretty-print directory contents
 brew "wdiff"            # Word differences in text files

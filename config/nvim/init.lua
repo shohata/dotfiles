@@ -8,9 +8,21 @@ opt.writebackup = false -- don't backup the file while editing
 opt.swapfile = false -- don't create swap files for new buffers
 opt.updatecount = 0 -- don't write swap files after some number of updates
 
-opt.backupdir = { "~/.vim-tmp", "~/.tmp", "~/tmp", "/var/tmp", "/tmp" }
+opt.backupdir = {
+    "~/.vim-tmp",
+    "~/.tmp",
+    "~/tmp",
+    "/var/tmp",
+    "/tmp"
+ }
 
-opt.directory = { "~/.vim-tmp", "~/.tmp", "~/tmp", "/var/tmp", "/tmp" }
+opt.directory = {
+    "~/.vim-tmp",
+    "~/.tmp",
+    "~/tmp",
+    "/var/tmp",
+    "/tmp"
+ }
 
 opt.history = 1000 -- store the last 1000 commands entered
 opt.textwidth = 120 -- after configured number of characters, wrap line
@@ -18,8 +30,14 @@ opt.textwidth = 120 -- after configured number of characters, wrap line
 -- Show the results of substition as they're happening but don't open a split
 opt.inccommand = "nosplit"
 
-opt.backspace = { "indent", "eol,start" } -- make backspace behave in a sane manner
-opt.clipboard = { "unnamed", "unnamedplus" } -- use the system clipboard
+opt.backspace = {
+    "indent",
+    "eol,start"
+ } -- make backspace behave in a sane manner
+opt.clipboard = {
+    "unnamed",
+    "unnamedplus"
+ } -- use the system clipboard
 opt.mouse = "a" -- set mouse mode to all modes
 
 -- Searching
@@ -33,8 +51,8 @@ opt.magic = true -- set magic on, for regular expressions
 -- Use that as a grepper if ripgrep installed
 local fn = vim.fn
 if fn.executable("rg") then
-  opt.grepprg = "rg --vimgrep --no-heading"
-  opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
+    opt.grepprg = "rg --vimgrep --no-heading"
+    opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 end
 
 -- Error bells
@@ -63,7 +81,10 @@ opt.wildmenu = true -- enhanced command line completion
 opt.hidden = true -- current buffer can be put into background
 opt.showcmd = true -- show incomplete commands
 opt.showmode = true -- don't show which mode disabled for PowerLine
-opt.wildmode = { "list", "longest" } -- complete files like a shell
+opt.wildmode = {
+    "list",
+    "longest"
+ } -- complete files like a shell
 opt.shell = vim.env.SHELL
 opt.cmdheight = 0 -- hide command bar when not used
 opt.title = true -- set terminal title
@@ -90,7 +111,13 @@ opt.foldlevel = 1
 
 -- Toggle invisible characters
 opt.list = true
-opt.listchars = { tab = "→ ", eol = "¬", trail = "⋅", extends = "❯", precedes = "❮" }
+opt.listchars = {
+    tab = "→ ",
+    eol = "¬",
+    trail = "⋅",
+    extends = "❯",
+    precedes = "❮"
+ }
 
 -- Hide the ~ character on empty lines at the end of the buffer
 opt.fcs = "eob: "
@@ -100,4 +127,9 @@ local g = vim.g
 g.mapleader = ","
 opt.pastetoggle = "<leader>v"
 
-require("plugins")
+if g.vscode then
+    -- VSCode extension
+else
+    -- ordinary Neovim
+    require("plugins")
+end

@@ -16,3 +16,11 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # Zsh dot directory
 # ----------------------------
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+# ----------------------------
+# dotfiles directory
+# ----------------------------
+export DOTFILES="$(dirname "$(dirname "$(dirname "$(readlink $0)")")")"
+
+# Skip the not really helping Ubuntu global compinit
+skip_global_compinit=1

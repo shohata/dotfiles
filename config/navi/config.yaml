@@ -17,6 +17,7 @@ finder:
 
 cheats:
     paths:
+        - $NAVI_CHEATS_PATH
         - $XDG_CONFIG_HOME/navi/cheats
 
 # search:
