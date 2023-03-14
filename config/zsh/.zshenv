@@ -1,8 +1,9 @@
 # ----------------------------
 # Basic configurations
 # ----------------------------
-export LANG='en_US.UTF-8'
-export EDITOR='nvim'
+export LANG="en_US.UTF-8"
+export EDITOR="nvim"
+export GIT_EDITOR="nvim"
 
 # ----------------------------
 # XDG base directory
@@ -20,7 +21,7 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 # ----------------------------
 # dotfiles directory
 # ----------------------------
-export DOTFILES="$(dirname "$(dirname "$(dirname "$(readlink $0)")")")"
+export DOTFILES="$(dirname "$(dirname "$(dirname "$(readlink "${(%):-%N}")")")")"
 
 # Skip the not really helping Ubuntu global compinit
 skip_global_compinit=1
