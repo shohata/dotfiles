@@ -5,15 +5,15 @@ typeset -U path
 typeset -U fpath
 
 path=(
-    "/usr/local/opt/grep/libexec/gnubin"(N-/)
-    "/usr/local/sbin"(N-/)
     "$HOME/.local/bin"(N-/)
+    "$(brew --prefix)/opt/grep/libexec/gnubin"(N-/)
+    "$(brew --prefix)/sbin"(N-/)
     "$path[@]"
 )
 
 fpath=(
-    "/usr/local/share/zsh/site-functions"(N-/)
     "$XDG_CONFIG_HOME/zsh/functions"(N-/)
+    "$(brew --prefix)/share/zsh/site-functions"(N-/)
     "$fpath[@]"
 )
 
