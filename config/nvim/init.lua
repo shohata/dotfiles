@@ -1,4 +1,5 @@
 require("globals")
+local theme = require("theme")
 
 -- General
 ----------------------------------------------------------------
@@ -14,7 +15,7 @@ opt.backupdir = {
     "~/tmp",
     "/var/tmp",
     "/tmp"
- }
+}
 
 opt.directory = {
     "~/.vim-tmp",
@@ -22,7 +23,7 @@ opt.directory = {
     "~/tmp",
     "/var/tmp",
     "/tmp"
- }
+}
 
 opt.history = 1000 -- store the last 1000 commands entered
 opt.textwidth = 120 -- after configured number of characters, wrap line
@@ -33,11 +34,11 @@ opt.inccommand = "nosplit"
 opt.backspace = {
     "indent",
     "eol,start"
- } -- make backspace behave in a sane manner
+} -- make backspace behave in a sane manner
 opt.clipboard = {
     "unnamed",
     "unnamedplus"
- } -- use the system clipboard
+} -- use the system clipboard
 opt.mouse = "a" -- set mouse mode to all modes
 
 -- Searching
@@ -84,7 +85,7 @@ opt.showmode = true -- don't show which mode disabled for PowerLine
 opt.wildmode = {
     "list",
     "longest"
- } -- complete files like a shell
+} -- complete files like a shell
 opt.shell = vim.env.SHELL
 opt.cmdheight = 0 -- hide command bar when not used
 opt.title = true -- set terminal title
@@ -117,19 +118,38 @@ opt.listchars = {
     trail = "⋅",
     extends = "❯",
     precedes = "❮"
- }
+}
 
 -- Hide the ~ character on empty lines at the end of the buffer
 opt.fcs = "eob: "
+
+-- Set up a framework for displaying errors or warnings from external tools
+local signs = {
+    Error = theme.icons.error,
+    Warning = theme.icons.warning,
+    Warn = theme.icons.warning,
+    Hint = theme.icons.hint,
+    Info = theme.icons.hint
+}
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, {
+        text = icon,
+        texthl = hl,
+        numhl = hl
+    })
+end
+
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    update_in_insert = true,
+    severity_sort = true
+})
 
 -- Mappings
 local g = vim.g
 g.mapleader = ","
 opt.pastetoggle = "<leader>v"
 
-if g.vscode then
-    -- VSCode extension
-else
-    -- ordinary Neovim
-    require("plugins")
-end
+require("plugins")

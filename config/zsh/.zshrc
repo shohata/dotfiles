@@ -45,7 +45,7 @@ source "$ZINIT_HOME/zinit.zsh"
 ZINIT[ZCOMPDUMP_PATH]="$XDG_CACHE_HOME/zsh/zcompdump"
 
 PS1="%F{green}%1~"$'\n'"➜ %f"
-zinit ice wait"0a" lucid
+#zinit ice wait"0a" lucid
 zinit light spaceship-prompt/spaceship-prompt
 
 zinit ice wait"0b" lucid

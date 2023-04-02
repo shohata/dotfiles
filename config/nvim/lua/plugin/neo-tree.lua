@@ -1,8 +1,6 @@
--- Unless you are still migrating, remove the deprecated commands from v1.x
-vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 local icons = require("theme").icons
 
-require("neo-tree").setup({
+local opts = {
     -- don't reset the cursor position when opening a file
     disable_netrw = true,
     hijack_netrw = true,
@@ -23,11 +21,11 @@ require("neo-tree").setup({
     source_selector = {
         winbar = true,
         statusline = false
-     },
+    },
     default_component_configs = {
         container = {
             enable_character_fade = true
-         },
+        },
         indent = {
             indent_size = 2,
             padding = 1, -- extra padding on left hand side
@@ -54,12 +52,12 @@ require("neo-tree").setup({
         modified = {
             symbol = "[+]",
             highlight = "NeoTreeModified"
-         },
+        },
         name = {
             trailing_slash = false,
             use_git_status_colors = true,
             highlight = "NeoTreeFileName"
-         },
+        },
         git_status = {
             symbols = {
                 -- Change type
@@ -82,7 +80,7 @@ require("neo-tree").setup({
         mapping_options = {
             noremap = true,
             nowait = true
-         },
+        },
         mappings = {
             ["<space>"] = {
                 "toggle_node",
@@ -95,7 +93,7 @@ require("neo-tree").setup({
                 "toggle_preview",
                 config = {
                     use_float = true
-                 }
+                }
             },
             ["l"] = "focus_preview",
             ["S"] = "open_split",
@@ -145,19 +143,19 @@ require("neo-tree").setup({
             "spec.tsx",
             "stories.tsx",
             "stories.mdx"
-         },
+        },
         ["tsx"] = {
             "spec.ts",
             "spec.tsx",
             "stories.tsx",
             "stories.mdx"
-         },
+        },
         ["js"] = {
             "d.ts"
-         },
+        },
         ["jsx"] = {
             "d.ts"
-         }
+        }
     },
     filesystem = {
         filtered_items = {
@@ -187,7 +185,7 @@ require("neo-tree").setup({
         cwd_target = {
             sidebar = "tab",
             current = "window"
-         },
+        },
         follow_current_file = true, -- This will find and focus the file in the active buffer every
         -- time the current file is changed while the tree is open.
         group_empty_dirs = false, -- when true, empty folders will be grouped together
@@ -239,6 +237,16 @@ require("neo-tree").setup({
             }
         }
     }
-})
+}
 
-vim.keymap.set("n", "<leader>k", ":Neotree toggle reveal<cr>");
+local keys = {
+    {
+        "<Leader>k",
+        ":Neotree toggle reveal<CR>"
+    }
+}
+
+return {
+    opts = opts,
+    keys = keys
+}

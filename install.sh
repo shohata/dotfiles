@@ -35,13 +35,17 @@ create_symlink() {
     src="$1"
     dest="$2"
 
-    if [ -e "$dest" ]; then
+    if [ -e "$dest" ] || [ -L "$dest" ]; then
         answer="n"
         info "~${dest#$HOME} already exists..."
         read -p "Are you sure you want to overwrite? (Y/n): " answer
         case "$answer" in
         "" | "Y" | "y" | "Yes" | "yes")
-            rm -rf "$dest"
+            if [ -L "$dest" ]; then
+                unlink "$dest"
+            else
+                rm -rf "$dest"
+            fi
             info "Creating symlink for $src"
             ln -s "$src" "$dest"
             ;;
@@ -129,6 +133,7 @@ setup_homebrew() {
 setup_git() {
     title "Setting up Git"
 
+    gitConfig="~/.gitconfig.local"
     defaultName=$(git config user.name)
     defaultEmail=$(git config user.email)
     defaultGithub=$(git config github.user)
@@ -137,9 +142,9 @@ setup_git() {
     read -rp "Email [$defaultEmail] " email
     read -rp "Github username [$defaultGithub] " github
 
-    git config -f ~/.gitconfig-local user.name "${name:-$defaultName}"
-    git config -f ~/.gitconfig-local user.email "${email:-$defaultEmail}"
-    git config -f ~/.gitconfig-local github.user "${github:-$defaultGithub}"
+    git config -f $gitConfig user.name "${name:-$defaultName}"
+    git config -f $gitConfig user.email "${email:-$defaultEmail}"
+    git config -f $gitConfig github.user "${github:-$defaultGithub}"
 
     if [[ "$(uname)" == "Darwin" ]]; then
         git config --global credential.helper "osxkeychain"

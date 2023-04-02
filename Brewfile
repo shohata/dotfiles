@@ -13,7 +13,6 @@ if OS.mac?
     cask "visual-studio-code"   # Open-source code editor
 
     # Fonts
-    cask "font-jetbrains-mono-nerd-font"
     cask "font-cousine-nerd-font"
 elsif OS.linux?
     brew "xclip"                # Access to clipboard (similar to pbcopy/pbpaste)
@@ -48,15 +47,9 @@ brew "ncdu"             # du alternate
 brew "neofetch"         # Pretty system info
 brew "neovim"           # vim alternative
 brew "node"             # Platform built on V8 to build network applications
-brew "openjdk"          # Development kit for the Java programming language
-brew "openjdk@11"       # Open JDK 11
-brew "openjdk@8"        # Open JDK 8
 brew "procs"            # ps alternative
 brew "python"           # python (latst)
 brew "ripgrep"          # Very fast file searcher
-brew "sbt"              # Build tool for Scala projects
-brew "scala"            # JVM-based programming language
-brew "scala@2.13"       # Scala 2.13
 brew "tmux"             # Terminal multiplexer
 brew "tree"             # Pretty-print directory contents
 brew "wdiff"            # Word differences in text files

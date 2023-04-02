@@ -1,4 +1,4 @@
-require("nvim-treesitter.configs").setup {
+local opts = {
     ensure_installed = {
         "bash",
         "c",
@@ -39,18 +39,18 @@ require("nvim-treesitter.configs").setup {
     highlight = {
         enable = true,
         use_languagetree = true
-     },
+    },
     context_commentstring = {
         enable = true
-     },
+    },
     indent = {
         enable = true
-     },
+    },
     rainbow = {
         enable = true,
         extended_mode = true,
         max_file_lines = 1000
-     },
+    },
     textobjects = {
         select = {
             enable = true,
@@ -66,10 +66,10 @@ require("nvim-treesitter.configs").setup {
             enable = false,
             swap_next = {
                 ["<leader>a"] = "@parameter.inner"
-             },
+            },
             swap_previous = {
                 ["<leader>A"] = "@parameter.inner"
-             }
+            }
         }
     },
     playground = {
@@ -90,4 +90,8 @@ require("nvim-treesitter.configs").setup {
             show_help = "?"
         }
     }
+}
+
+return {
+    opts = opts
 }

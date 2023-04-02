@@ -3,7 +3,9 @@
 # ----------------------------
 # navi
 # ----------------------------
-eval "$(navi widget zsh)"   # Ctrl+G is assigned to launching navi
+if [[ -x "$(command -v navi)" ]]; then
+    eval "$(navi widget zsh)"   # Ctrl+G is assigned to launching navi
+fi
 
 # ----------------------------
 # Edit command line
