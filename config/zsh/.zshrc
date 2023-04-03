@@ -35,6 +35,14 @@ autoload -Uz load_local
 autoload -Uz load_options
 
 # ----------------------------
+# Prompt
+# ----------------------------
+if [[ -x "$(command -v starship)" ]]; then
+    PS1="%F{green}%1~"$'\n'"❯%f "
+    eval "$(starship init zsh)"
+fi
+
+# ----------------------------
 # Plugins
 # ----------------------------
 ZINIT_HOME="$XDG_DATA_HOME/zinit/zinit.git"
@@ -43,10 +51,6 @@ ZINIT_HOME="$XDG_DATA_HOME/zinit/zinit.git"
 source "$ZINIT_HOME/zinit.zsh"
 
 ZINIT[ZCOMPDUMP_PATH]="$XDG_CACHE_HOME/zsh/zcompdump"
-
-PS1="%F{green}%1~"$'\n'"➜ %f"
-#zinit ice wait"0a" lucid
-zinit light spaceship-prompt/spaceship-prompt
 
 zinit ice wait"0b" lucid
 zinit light momo-lab/zsh-replace-multiple-dots

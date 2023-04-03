@@ -50,6 +50,7 @@ brew "node"             # Platform built on V8 to build network applications
 brew "procs"            # ps alternative
 brew "python"           # python (latst)
 brew "ripgrep"          # Very fast file searcher
+brew "starship"         # Cross-shell prompt for astronauts
 brew "tmux"             # Terminal multiplexer
 brew "tree"             # Pretty-print directory contents
 brew "wdiff"            # Word differences in text files
