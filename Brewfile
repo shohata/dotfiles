@@ -22,10 +22,10 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 
 # Packages
+brew "asdf"             # Extendable version manager with support for Ruby, Node.js, Erlang & more
 brew "awk"              # Text processing scripting language
 brew "bat"              # cat alternative
 brew "cmake"            # Cross-platform make
-brew "deno"             # Secure runtime for JavaScript and TypeScript
 brew "duf"              # df alternate
 brew "exa"              # ls alternative
 brew "fd"               # find alternative
@@ -53,6 +53,7 @@ brew "ripgrep"          # Very fast file searcher
 brew "starship"         # Cross-shell prompt for astronauts
 brew "tmux"             # Terminal multiplexer
 brew "tree"             # Pretty-print directory contents
+brew "vim"              # vim (latest)
 brew "wdiff"            # Word differences in text files
 brew "wget"             # Internet file retriever
 brew "zsh"              # zsh (latest)

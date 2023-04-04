@@ -6,33 +6,29 @@ typeset -U fpath
 
 path=(
     "$HOME/.local/bin"(N-/)
-    "$(brew --prefix)/opt/grep/libexec/gnubin"(N-/)
+    "$(brew --prefix grep)/libexec/gnubin"(N-/)
     "$(brew --prefix)/sbin"(N-/)
     "$path[@]"
 )
 
 fpath=(
-    "$XDG_CONFIG_HOME/zsh/functions"(N-/)
     "$(brew --prefix)/share/zsh/site-functions"(N-/)
     "$fpath[@]"
 )
 
 # ----------------------------
-# Reset key mappings
-# ----------------------------
-bindkey -d          # reset key bindings
-bindkey -e          # use emacs key bindings
-bindkey -r '^J'     # unbind Ctrl-j for tmux prefix
-
-# ----------------------------
 # Load functions
 # ----------------------------
-autoload -Uz load_aliases
-autoload -Uz load_env
-autoload -Uz load_history
-autoload -Uz load_keymaps
-autoload -Uz load_local
-autoload -Uz load_options
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+# ----------------------------
+# Reset key mappings
+# ----------------------------
+bindkey -d                      # reset key bindings
+bindkey -e                      # use emacs key bindings
+bindkey -r '^J'                 # unbind Ctrl-j for tmux prefix
+bindkey '^O' edit-command-line  # edit the current command line in $EDITOR
 
 # ----------------------------
 # Prompt
@@ -58,8 +54,8 @@ zinit light momo-lab/zsh-replace-multiple-dots
 zinit ice wait"0b" lucid
 zinit light Aloxaf/fzf-tab
 
-zinit ice wait"0c" lucid atload"load_keymaps"
-zinit light yuki-yano/zeno.zsh
+zinit ice wait"0c" lucid
+zinit light olets/zsh-abbr
 
 zinit ice wait"0d" lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
@@ -68,5 +64,5 @@ zinit ice wait"0d" lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
 zinit ice wait"0e" lucid blockf \
-    atload"load_aliases; load_env; load_history; load_options; load_local; zicompinit; zicdreplay"
+    atload"source \"$ZDOTDIR/lazy.zsh\"; zicompinit; zicdreplay"
 zinit light zsh-users/zsh-completions

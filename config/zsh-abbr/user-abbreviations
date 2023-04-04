@@ -1,0 +1,59 @@
+# ----------------------------
+# Core
+# ----------------------------
+abbr "reload"="RELOAD=1 source $ZDOTDIR/.zshrc"
+
+# Helpers
+abbr "ls"="ls --color=auto"
+abbr "grep"="grep --color=auto"
+abbr "rmf"="rm -rf"
+
+# Disk free, in Gigabytes, not bytes
+abbr "df"="df -h"
+
+# Calculate disk usage for a folder
+abbr "du"="du -h -c"
+
+# list the PATH separated by new lines
+abbr "lpath"="echo $PATH | tr ':' '\n'"
+
+# Hide/show all desktop icons (useful when presenting)
+abbr "hidedesktop"="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+abbr "showdesktop"="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+# Recursively delete `.DS_Store` files
+abbr cleanup="find . -name "*.DS_Store" -type f -ls -delete"
+
+# Remove broken symlinks
+abbr clsym="find -L . -name . -o -type d -prune -o -type l -exec rm {} +"
+
+# ----------------------------
+# exa
+# ----------------------------
+abbr "l"="exa --icons --git --long --all"
+abbr "la"="exa --icons --git --all"
+abbr "ll"="exa --icons --git --long"
+abbr "lld"="exa --icons --git --long | grep ^d"
+
+# ----------------------------
+# git
+# ----------------------------
+abbr "gs"="git s"
+abbr "glog"="git l"
+
+# ----------------------------
+# nvim
+# ----------------------------
+# shortcut to open vim and immediately update vim-plug and all installed plugins
+abbr "nvimu"="nvim --headless "+Lazy! sync" +qa"
+
+# immediately open to fugitive"s status screen
+abbr "nvimg"="nvim +Ge:"
+
+# ----------------------------
+# tmux
+# ----------------------------
+abbr "ta"="tmux attach"
+abbr "tls"="tmux ls"
+abbr "tat"="tmux attach -t"
+abbr "tns"="tmux new-session -s"
