@@ -7,13 +7,16 @@ if OS.mac?
     brew "trash"                # rm, but put in the trash rather than completely delete
 
     # Applications
+    cask "google-chrome"        # Google Chrome
     cask "imageoptim"           # Tool to optimize images
     cask "kitty"                # Better terminal emulator
     cask "obsidian"             # Knowledge base
     cask "visual-studio-code"   # Open-source code editor
+    cask "zoom"                 # Video communication and virtual meeting platform
 
     # Fonts
     cask "font-cousine-nerd-font"
+    cask "font-lilex-nerd-font"
 elsif OS.linux?
     brew "xclip"                # Access to clipboard (similar to pbcopy/pbpaste)
 end

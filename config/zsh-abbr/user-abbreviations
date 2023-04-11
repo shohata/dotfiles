@@ -28,6 +28,13 @@ abbr cleanup="find . -name "*.DS_Store" -type f -ls -delete"
 abbr clsym="find -L . -name . -o -type d -prune -o -type l -exec rm {} +"
 
 # ----------------------------
+# cd
+# ----------------------------
+abbr ".."="cd .."
+abbr "../.."="cd ../.."
+abbr "../../.."="cd ../../.."
+
+# ----------------------------
 # exa
 # ----------------------------
 abbr "l"="exa --icons --git --long --all"
@@ -38,8 +45,25 @@ abbr "lld"="exa --icons --git --long | grep ^d"
 # ----------------------------
 # git
 # ----------------------------
+abbr "g"="git"
 abbr "gs"="git s"
 abbr "glog"="git l"
+abbr "git a"="git add --update"
+abbr "git b"="git branch"
+abbr "git c"="git commit -m"
+abbr "git cp"="git cherry-pick"
+abbr "git f"="git fetch"
+abbr "git g"="git graph"
+abbr "git psu"="git push -u origin HEAD"
+abbr "git push -f"="git push --force-with-lease"
+abbr "git root"="git rev-parse --show-toplevel"
+abbr "git s"="git status"
+abbr "git stat"="git diff --stat"
+abbr "git stats"="git diff --stat --staged"
+abbr "git sw"="git switch"
+abbr "git tags"="git tag -l --sort=v:refname"
+abbr "git B"="git symbolic-ref --short HEAD"
+abbr "git U"="git upstream"
 
 # ----------------------------
 # nvim
@@ -47,7 +71,7 @@ abbr "glog"="git l"
 # shortcut to open vim and immediately update vim-plug and all installed plugins
 abbr "nvimu"="nvim --headless "+Lazy! sync" +qa"
 
-# immediately open to fugitive"s status screen
+# immediately open to fugitive's status screen
 abbr "nvimg"="nvim +Ge:"
 
 # ----------------------------

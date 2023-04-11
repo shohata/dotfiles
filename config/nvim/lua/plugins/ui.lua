@@ -6,6 +6,7 @@ return {
     {
         "rcarriga/nvim-notify",
         cond = not vim.g.vscode,
+        dependencies = { "LazyVim/LazyVim" },
         keys = {
             {
                 "<leader>un",
@@ -55,7 +56,7 @@ return {
     {
         "akinsho/bufferline.nvim",
         event = "VeryLazy",
-        dependencies = "catppuccin",
+        dependencies = { "catppuccin", "LazyVim/LazyVim" },
         keys = {
             { "<leader>bp", "<cmd>BufferLineTogglePin<cr>", desc = "Toggle pin" },
             { "<leader>bP", "<cmd>BufferLineGroupClose ungrouped<cr>", desc = "Delete non-pinned buffers" },
@@ -85,6 +86,7 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
+        dependencies = { "LazyVim/LazyVim" },
         opts = function()
             local icons = require("lazyvim.config").icons
 
@@ -283,6 +285,7 @@ return {
     {
         "SmiteshP/nvim-navic",
         lazy = true,
+        dependencies = { "LazyVim/LazyVim" },
         init = function()
             vim.g.navic_silence = true
             require("lazyvim.util").on_attach(function(client, buffer)

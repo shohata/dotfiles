@@ -15,6 +15,7 @@ return {
             "williamboman/mason-lspconfig.nvim",
             {
                 "hrsh7th/cmp-nvim-lsp",
+                dependencies = { "LazyVim/LazyVim" },
                 cond = function()
                     return require("lazyvim.util").has("nvim-cmp")
                 end,
@@ -41,6 +42,8 @@ return {
             -- LSP Server Settings
             ---@type lspconfig.options
             servers = {
+                clangd = {},
+                cmake = {},
                 bashls = {},
                 denols = {},
                 eslint = {},
@@ -96,6 +99,7 @@ return {
             local servers = opts.servers
             local capabilities =
                 require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+            capabilities.offsetEncoding = { "utf-16" }
 
             local function setup(server)
                 local server_opts = vim.tbl_deep_extend("force", {

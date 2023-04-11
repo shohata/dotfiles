@@ -54,6 +54,7 @@ return {
                 "markdown_inline",
                 "python",
                 "regex",
+                "ruby",
                 "rust",
                 "scala",
                 "toml",

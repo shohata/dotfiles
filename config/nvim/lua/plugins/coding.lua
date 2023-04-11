@@ -14,7 +14,7 @@ return {
     },
     {
         "zbirenbaum/copilot-cmp",
-        dependencies = "copilot.lua",
+        dependencies = { "zbirenbaum/copilot.lua", "LazyVim/LazyVim" },
         opts = {},
         config = function(_, opts)
             local copilot_cmp = require("copilot_cmp")
@@ -33,12 +33,6 @@ return {
         build = (not jit.os:find("Windows"))
                 and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
             or nil,
-        dependencies = {
-            "rafamadriz/friendly-snippets",
-            config = function()
-                require("luasnip.loaders.from_vscode").lazy_load()
-            end,
-        },
         opts = {
             history = true,
             delete_check_events = "TextChanged",
@@ -71,6 +65,7 @@ return {
     },
     {
         "rafamadriz/friendly-snippets",
+        dependencies = { "L3MON4D3/LuaSnip" },
         config = function()
             require("luasnip.loaders.from_vscode").lazy_load()
         end,
@@ -84,6 +79,7 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
             "saadparwaiz1/cmp_luasnip",
+            "L3MON4D3/LuaSnip",
         },
         opts = function()
             local cmp = require("cmp")

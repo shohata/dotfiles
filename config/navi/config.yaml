@@ -17,8 +17,8 @@ finder:
 
 cheats:
     paths:
-        - $NAVI_CHEATS_PATH
-        - $XDG_CONFIG_HOME/navi/cheats
+        - $NAVI_PATH
+        - $CHEATS_PATH
 
 # search:
 #     tags: git,!checkout # equivalent to the --tag-rules option

@@ -88,7 +88,9 @@ fi
 # navi
 # ----------------------------
 if [[ -x "$(command -v navi)" ]]; then
-    export NAVI_CHEATS_PATH="$(navi info cheats-path)"
+    #export NAVI_PATH="$XDG_DATA_HOME/navi/cheats"
+    export NAVI_PATH="$(navi info cheats-path)"
+    export CHEATS_PATH="$XDG_CONFIG_HOME/navi/cheats"
     export NAVI_CONFIG="$XDG_CONFIG_HOME/navi/config.yaml"
 
     # Ctrl+G is assigned to launching navi
@@ -130,6 +132,10 @@ unsetopt LOCAL_TRAPS        # If this option is set, the trap is resoroted when 
 # ----------------------------
 # zstyle
 # ----------------------------
+# use caching to make completion for commands such as dpkg and apt usable.
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+
 # matches case insensitive for lowercase
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 

@@ -75,7 +75,7 @@ return {
         cmd = "Telescope",
         version = false, -- telescope did only one release, so use HEAD for now
         cond = not vim.g.vscode,
-        dependencies = { "nvim-lua/plenary.nvim" },
+        dependencies = { "nvim-lua/plenary.nvim", "LazyVim/LazyVim" },
         keys = function()
             local Util = require("lazyvim.util")
             return {
@@ -229,6 +229,7 @@ return {
         "folke/which-key.nvim",
         cond = not vim.g.vscode,
         event = "VeryLazy",
+        dependencies = { "LazyVim/LazyVim" },
         opts = {
             plugins = { spelling = true },
         },
