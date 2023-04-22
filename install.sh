@@ -221,16 +221,16 @@ setup_macos() {
         defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
         info "Set a blazingly fast keyboard repeat rate"
-        defaults write NSGlobalDomain KeyRepeat -int 1
+        defaults write NSGlobalDomain KeyRepeat -int 2
 
         info "Set a shorter Delay until key repeat"
         defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
-        info "Enable tap to click (Trackpad)"
-        defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+        #info "Enable tap to click (Trackpad)"
+        #defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 
-        info "Enable Safari’s debug menu"
-        defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+        #info "Enable Safari’s debug menu"
+        #defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
         info "Kill affected applications"
 

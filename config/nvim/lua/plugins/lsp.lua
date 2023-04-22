@@ -42,9 +42,8 @@ return {
             -- LSP Server Settings
             ---@type lspconfig.options
             servers = {
-                clangd = {},
-                cmake = {},
                 bashls = {},
+                cmake = {},
                 denols = {},
                 eslint = {},
                 jsonls = {},
@@ -52,6 +51,7 @@ return {
                 rust_analyzer = {},
                 tsserver = {},
                 vimls = {},
+                clangd = {},
                 lua_ls = {
                     -- mason = false, -- set to false if you don't want this server to be installed with mason
                     settings = {
@@ -77,6 +77,10 @@ return {
                 -- end,
                 -- Specify * to use this function as a fallback for any server
                 -- ["*"] = function(server, opts) end,
+                clangd = function(_, opts)
+                    opts.capabilities.offsetEncoding = { "utf-16" }
+                    require("lspconfig")["clangd"].setup(opts)
+                end,
             },
         },
         ---@param opts PluginLspOpts
@@ -99,7 +103,6 @@ return {
             local servers = opts.servers
             local capabilities =
                 require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-            capabilities.offsetEncoding = { "utf-16" }
 
             local function setup(server)
                 local server_opts = vim.tbl_deep_extend("force", {

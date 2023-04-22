@@ -39,12 +39,14 @@ brew "git"              # Git version control (latest version)
 brew "git-delta"        # Better git diff
 brew "glow"             # Markdown viewer
 brew "gnupg"            # GPG
+brew "go"               # Open source programming language to build simple/reliable/efficient software
 brew "grep"             # grep (latest)
 brew "hexyl"            # od alternative
 brew "htop"             # top alternative
 brew "jq"               # Work with JSON files in shell scripts
 brew "lua"              # Powerful, lightweight programming language
 brew "luarocks"         # Package manager for the Lua programming language
+brew "make"             # Utility for directing compilation
 brew "navi"             # interactive cheatsheet tool for the command-line
 brew "ncdu"             # du alternate
 brew "neofetch"         # Pretty system info
