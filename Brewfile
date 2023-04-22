@@ -7,12 +7,15 @@ if OS.mac?
     brew "trash"                # rm, but put in the trash rather than completely delete
 
     # Applications
-    cask "google-chrome"        # Google Chrome
-    cask "imageoptim"           # Tool to optimize images
-    cask "kitty"                # Better terminal emulator
-    cask "obsidian"             # Knowledge base
-    cask "visual-studio-code"   # Open-source code editor
-    cask "zoom"                 # Video communication and virtual meeting platform
+    cask "google-chrome"            # Google Chrome
+    cast "google-drive"             # Google Drive
+    cask "hammerspoon"              # Powerful automation tool for OS X
+    cask "imageoptim"               # Tool to optimize images
+    cask "kitty"                    # Better terminal emulator
+    cask "obsidian"                 # Knowledge base
+    cask "session-manager-plugin"   # Plugin for AWS CLI to start and end sessions that connect to managed instances
+    cask "visual-studio-code"       # Open-source code editor
+    cask "zoom"                     # Video communication and virtual meeting platform
 
     # Fonts
     cask "font-cousine-nerd-font"
@@ -27,6 +30,7 @@ tap "homebrew/core"
 # Packages
 brew "asdf"             # Extendable version manager with support for Ruby, Node.js, Erlang & more
 brew "awk"              # Text processing scripting language
+brew "awscli"           # Official Amazon AWS command-line interface
 brew "bat"              # cat alternative
 brew "cmake"            # Cross-platform make
 brew "duf"              # df alternate
@@ -54,6 +58,7 @@ brew "neovim"           # vim alternative
 brew "node"             # Platform built on V8 to build network applications
 brew "procs"            # ps alternative
 brew "python"           # python (latst)
+brew "qpdf"             # Tools for and transforming and inspecting PDF files
 brew "ripgrep"          # Very fast file searcher
 brew "starship"         # Cross-shell prompt for astronauts
 brew "tmux"             # Terminal multiplexer

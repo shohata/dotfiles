@@ -4,29 +4,22 @@
 
 return {
     {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        build = ":Copilot auth",
+        "tzachar/cmp-tabnine",
+        build = "./install.sh",
+        dependencies = "hrsh7th/nvim-cmp",
         opts = {
-            suggestion = { enabled = false },
-            panel = { enabled = false },
+            max_lines = 1000,
+            max_num_results = 20,
+            sort = true,
+            run_on_every_keystroke = true,
+            snippet_placeholder = "..",
+            ignored_file_types = {
+                -- default is not to ignore
+                -- uncomment to ignore in lua:
+                -- lua = true
+            },
+            show_prediction_strength = false,
         },
-    },
-    {
-        "zbirenbaum/copilot-cmp",
-        dependencies = { "zbirenbaum/copilot.lua", "LazyVim/LazyVim" },
-        opts = {},
-        config = function(_, opts)
-            local copilot_cmp = require("copilot_cmp")
-            copilot_cmp.setup(opts)
-            -- attach cmp source whenever copilot attaches
-            -- fixes lazy-loading issues with the copilot cmp source
-            require("lazyvim.util").on_attach(function(client)
-                if client.name == "copilot" then
-                    copilot_cmp._on_insert_enter()
-                end
-            end)
-        end,
     },
     {
         "L3MON4D3/LuaSnip",
@@ -65,7 +58,7 @@ return {
     },
     {
         "rafamadriz/friendly-snippets",
-        dependencies = { "L3MON4D3/LuaSnip" },
+        dependencies = "L3MON4D3/LuaSnip",
         config = function()
             require("luasnip.loaders.from_vscode").lazy_load()
         end,
@@ -80,6 +73,7 @@ return {
             "hrsh7th/cmp-path",
             "saadparwaiz1/cmp_luasnip",
             "L3MON4D3/LuaSnip",
+            "tzachar/cmp-tabnine",
         },
         opts = function()
             local cmp = require("cmp")
@@ -110,6 +104,7 @@ return {
                     { name = "luasnip" },
                     { name = "buffer" },
                     { name = "path" },
+                    { name = "cmp_tabnine" },
                 }),
                 formatting = {
                     format = function(_, item)
@@ -193,7 +188,7 @@ return {
         --   { "i", mode = { "x", "o" } },
         -- },
         event = "VeryLazy",
-        dependencies = { "nvim-treesitter-textobjects" },
+        dependencies = "nvim-treesitter-textobjects",
         opts = function()
             local ai = require("mini.ai")
             return {

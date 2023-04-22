@@ -2,8 +2,6 @@
 -- Language Serveer Protocol (LSP)
 ---------------------------------------------------------
 
-local theme = require("common.theme")
-
 return {
     {
         "neovim/nvim-lspconfig",
@@ -146,7 +144,7 @@ return {
     {
         "jose-elias-alvarez/null-ls.nvim",
         event = { "BufReadPre", "BufNewFile" },
-        dependencies = { "mason.nvim" },
+        dependencies = "mason.nvim",
         opts = function()
             local nls = require("null-ls")
             return {
@@ -163,19 +161,23 @@ return {
     {
 
         "williamboman/mason.nvim",
+        dependencies = "LazyVim/LazyVim",
         cmd = "Mason",
         keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
-        opts = {
-            ui = {
-                border = theme.border,
-            },
-            ensure_installed = {
-                "flake8",
-                "prettierd",
-                "shfmt",
-                "stylua",
-            },
-        },
+        opts = function()
+            local border = require("lazyvim.config").border
+            return {
+                ui = {
+                    border = border,
+                },
+                ensure_installed = {
+                    "flake8",
+                    "prettierd",
+                    "shfmt",
+                    "stylua",
+                },
+            }
+        end,
         ---@param opts MasonSettings | {ensure_installed: string[]}
         config = function(_, opts)
             require("mason").setup(opts)
@@ -190,6 +192,6 @@ return {
     },
     {
         "scalameta/nvim-metals",
-        dependencies = { "nvim-lua/plenary.nvim" },
+        dependencies = "nvim-lua/plenary.nvim",
     },
 }

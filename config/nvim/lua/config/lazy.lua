@@ -1,5 +1,3 @@
-local theme = require("common.theme")
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   -- bootstrap lazy.nvim
@@ -13,7 +11,7 @@ require("lazy").setup({
         -- add LazyVim and import its plugins
         { "LazyVim/LazyVim", import = "lazyvim.plugins" },
         -- import any extras modules here
-        { import = "lazyvim.plugins.extras.coding.copilot" },
+        -- { import = "lazyvim.plugins.extras.coding.copilot" },
         -- { import = "lazyvim.plugins.extras.lang.typescript" },
         -- { import = "lazyvim.plugins.extras.lang.json" },
         -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
@@ -30,7 +28,6 @@ require("lazy").setup({
         -- version = "*", -- try installing the latest stable version for plugins that support semver
     },
     install = { colorscheme = { "catppuccin", "tokyonight", "habamax" } },
-    ui = { border = theme.border },
     checker = { enabled = true }, -- automatically check for plugin updates
     performance = {
         rtp = {
@@ -45,6 +42,18 @@ require("lazy").setup({
                 "tutor",
                 "zipPlugin",
             },
+        },
+    },
+    ui = {
+        border = {
+            { "🭽", "FloatBorder" },
+            { "▔", "FloatBorder" },
+            { "🭾", "FloatBorder" },
+            { "▕", "FloatBorder" },
+            { "🭿", "FloatBorder" },
+            { "▁", "FloatBorder" },
+            { "🭼", "FloatBorder" },
+            { "▏", "FloatBorder" },
         },
     },
 })

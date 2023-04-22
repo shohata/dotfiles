@@ -116,9 +116,9 @@ setup_homebrew() {
     fi
 
     if [ "$(uname)" == "Linux" ]; then
-        test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+        test -d "$HOME/.linuxbrew" && eval "$($HOME/.linuxbrew/bin/brew shellenv)"
         test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+        test -r "$HOME/.bash_profile" && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>"$HOME/.bash_profile"
     fi
 
     # install brew dependencies from Brewfile
@@ -133,7 +133,7 @@ setup_homebrew() {
 setup_git() {
     title "Setting up Git"
 
-    gitConfig="~/.gitconfig.local"
+    gitConfig="$HOME/.gitconfig.local"
     defaultName=$(git config user.name)
     defaultEmail=$(git config user.email)
     defaultGithub=$(git config github.user)
@@ -187,35 +187,19 @@ setup_macos() {
     title "Configuring macOS"
     if [[ "$(uname)" == "Darwin" ]]; then
 
-        info "Finder: show all filename extensions"
-        defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+        info "====Global===="
 
-        info "show hidden files by default"
-        defaults write com.apple.Finder AppleShowAllFiles -bool false
-
-        info "only use UTF-8 in Terminal.app"
+        info "Only use UTF-8 in Terminal.app"
         defaults write com.apple.terminal StringEncodings -array 4
 
-        info "expand save dialog by default"
+        info "Expand save dialog by default"
         defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
-
-        info "show the ~/Library folder in Finder"
-        chflags nohidden ~/Library
 
         info "Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
         defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
         info "Enable subpixel font rendering on non-Apple LCDs"
         defaults write NSGlobalDomain AppleFontSmoothing -int 2
-
-        info "Use current directory as default search scope in Finder"
-        defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-
-        info "Show Path bar in Finder"
-        defaults write com.apple.finder ShowPathbar -bool true
-
-        info "Show Status bar in Finder"
-        defaults write com.apple.finder ShowStatusBar -bool true
 
         info "Disable press-and-hold for keys in favor of key repeat"
         defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
@@ -225,6 +209,62 @@ setup_macos() {
 
         info "Set a shorter Delay until key repeat"
         defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+        info "====System===="
+
+        info "Disable to create a new folder named .DS_Store"
+        defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+        info "====Menubar===="
+
+        info "Show percentage of batter"
+        defaults write com.apple.menuextra.battery ShowPercent -string "YES"
+
+        info "Change date format"
+        defaults write com.apple.menuextra.clock DateFormat -string "M\u6708d\u65e5(EEE)  H:mm:ss"
+
+        info "====Finder===="
+
+        info "Set big icons on sidebar"
+        defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 3
+
+        info "Finder: show all filename extensions"
+        defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+        info "Show hidden files by default"
+        defaults write com.apple.Finder AppleShowAllFiles -bool false
+
+        info "Show path bar in Finder"
+        defaults write com.apple.finder ShowPathbar -bool true
+
+        info "Show status bar in Finder"
+        defaults write com.apple.finder ShowStatusBar -bool true
+
+        info "Use current directory as default search scope in Finder"
+        defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+        info "Show the ~/Library folder in Finder"
+        chflags nohidden ~/Library
+
+        info "====Dock===="
+
+        info "Enable to expand tile on Dock (magnification)"
+        defaults write com.apple.dock magnification -bool yes
+
+        info "Set general tile size on Dock as 32"
+        defaults write com.apple.dock tilesize -int 32
+
+        info "Set expanded tile size on Dock as 128"
+        defaults write com.apple.dock largesize -int 128
+
+        info "Enable to hide and show Dock automatically"
+        defaults write com.apple.dock autohide -bool true
+
+        info "Enable to hide and show Dock immediately"
+        defaults write com.apple.dock autohide-delay -float 0.0
+
+        info "Enable quick hide animation of Dock"
+        defaults write com.apple.dock autohide-time-modifier -float 1.0
 
         #info "Enable tap to click (Trackpad)"
         #defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
@@ -240,9 +280,19 @@ setup_macos() {
     fi
 }
 
+setup_hammerspoon() {
+    title "Configuring Hammerspoon"
+    if [[ "$(uname)" == "Darwin" ]]; then
+        info "Set Hammerspoon config file directory as XDG Base Directory"
+        defaults write org.hammerspoon.Hammerspoon MJConfigFile "$HOME/.config/hammerspoon/init.lua"
+    else
+        warning "macOS not detected. Skipping."
+    fi
+}
+
 fetch_catppuccin_theme() {
     for palette in frappe latte macchiato mocha; do
-        curl -o "$DOTFILES/config/kitty/themes/catppuccin-$palette.conf" "https://raw.githubusercontent.com/catppuccin/kitty/main/$palette.conf"
+        curl -o "$DOTFILES/config/kitty/themes/catppuccin-$palette.conf" "https://raw.githubusercontent.com/catppuccin/kitty/main/themes/$palette.conf"
     done
 }
 
@@ -267,6 +317,9 @@ terminfo)
     ;;
 macos)
     setup_macos
+    ;;
+hammerspoon)
+    setup_hammerspoon
     ;;
 catppuccin)
     fetch_catppuccin_theme

@@ -229,7 +229,7 @@ return {
         "folke/which-key.nvim",
         cond = not vim.g.vscode,
         event = "VeryLazy",
-        dependencies = { "LazyVim/LazyVim" },
+        dependencies = "LazyVim/LazyVim",
         opts = {
             plugins = { spelling = true },
         },

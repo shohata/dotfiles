@@ -6,7 +6,7 @@ return {
     {
         "rcarriga/nvim-notify",
         cond = not vim.g.vscode,
-        dependencies = { "LazyVim/LazyVim" },
+        dependencies = "LazyVim/LazyVim",
         keys = {
             {
                 "<leader>un",
@@ -86,7 +86,7 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
-        dependencies = { "LazyVim/LazyVim" },
+        dependencies = "LazyVim/LazyVim",
         opts = function()
             local icons = require("lazyvim.config").icons
 
@@ -285,7 +285,7 @@ return {
     {
         "SmiteshP/nvim-navic",
         lazy = true,
-        dependencies = { "LazyVim/LazyVim" },
+        dependencies = "LazyVim/LazyVim",
         init = function()
             vim.g.navic_silence = true
             require("lazyvim.util").on_attach(function(client, buffer)

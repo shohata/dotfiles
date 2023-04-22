@@ -151,5 +151,20 @@ zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*' group-name ''
 
+# ----------------------------
+# Aliases
+# ----------------------------
+# Helpers
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
+alias rmf="rm -rf"
+# Disk free, in Gigabytes, not bytes
+alias df="df -h"
+# Calculate disk usage for a folder
+alias du="du -h -c"
+
+# ----------------------------
+# Local zshrc
+# ----------------------------
 # If a ~/.zshrc.local exists, source it
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"

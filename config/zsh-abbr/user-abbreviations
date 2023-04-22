@@ -3,17 +3,6 @@
 # ----------------------------
 abbr "reload"="RELOAD=1 source $ZDOTDIR/.zshrc"
 
-# Helpers
-abbr "ls"="ls --color=auto"
-abbr "grep"="grep --color=auto"
-abbr "rmf"="rm -rf"
-
-# Disk free, in Gigabytes, not bytes
-abbr "df"="df -h"
-
-# Calculate disk usage for a folder
-abbr "du"="du -h -c"
-
 # list the PATH separated by new lines
 abbr "lpath"="echo $PATH | tr ':' '\n'"
 
@@ -40,37 +29,53 @@ abbr "../../.."="cd ../../.."
 abbr "l"="exa --icons --git --long --all"
 abbr "la"="exa --icons --git --all"
 abbr "ll"="exa --icons --git --long"
+abbr "lla"="exa --icons --git --long --all"
 abbr "lld"="exa --icons --git --long | grep ^d"
 
 # ----------------------------
 # git
 # ----------------------------
 abbr "g"="git"
-abbr "gs"="git s"
-abbr "glog"="git l"
 abbr "git a"="git add --update"
+abbr "git am"="git commit --amend -m"
+abbr "git amno"="git commit --amend --no-edit"
 abbr "git b"="git branch"
+abbr "git br"="git branch -v"
 abbr "git c"="git commit -m"
+abbr "git co"="git checkout"
 abbr "git cp"="git cherry-pick"
 abbr "git f"="git fetch"
 abbr "git g"="git graph"
-abbr "git psu"="git push -u origin HEAD"
-abbr "git push -f"="git push --force-with-lease"
+abbr "git push"="git push -u origin HEAD"
+abbr "git pushf"="git push --force-with-lease origin HEAD"
+abbr "git remotes"="git remote -v"
 abbr "git root"="git rev-parse --show-toplevel"
-abbr "git s"="git status"
+abbr "git st"="git status"
 abbr "git stat"="git diff --stat"
 abbr "git stats"="git diff --stat --staged"
 abbr "git sw"="git switch"
 abbr "git tags"="git tag -l --sort=v:refname"
+abbr "git undo"="git reset --soft HEAD~1"
+abbr "git up"="git upstream"
+
+# show current branch name
 abbr "git B"="git symbolic-ref --short HEAD"
-abbr "git U"="git upstream"
+# show log
+abbr "git l"="git log --graph --pretty=format:'%Cred%h%Creset %C(bold blue)%an%C(reset) - %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+# show status
+abbr "git s"="git status --short --branch"
+# rebase the current branch with changes from upstream remote
+abbr "git update"="git fetch upstream && git rebase upstream/$(git rev-parse --abbrev-ref HEAD)"
+
+# clean up all
+abbr "git cleanup"="git remote prune origin && git gc && git clean -df && git stash clear"
+abbr "git forget"="git fetch -p origin && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
 
 # ----------------------------
 # nvim
 # ----------------------------
 # shortcut to open vim and immediately update vim-plug and all installed plugins
 abbr "nvimu"="nvim --headless "+Lazy! sync" +qa"
-
 # immediately open to fugitive's status screen
 abbr "nvimg"="nvim +Ge:"
 
