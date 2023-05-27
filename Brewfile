@@ -1,6 +1,6 @@
 if OS.mac?
     # taps
-    tap "homebrew/cask"
+    #tap "homebrew/cask"
     tap "homebrew/cask-fonts"
 
     brew "noti"                 # Utility to display notifications from scripts
@@ -10,7 +10,6 @@ if OS.mac?
     cask "google-chrome"            # Google Chrome
     cast "google-drive"             # Google Drive
     cask "hammerspoon"              # Powerful automation tool for OS X
-    cask "imageoptim"               # Tool to optimize images
     cask "kitty"                    # Better terminal emulator
     cask "obsidian"                 # Knowledge base
     cask "session-manager-plugin"   # Plugin for AWS CLI to start and end sessions that connect to managed instances
@@ -25,7 +24,7 @@ elsif OS.linux?
 end
 
 tap "homebrew/bundle"
-tap "homebrew/core"
+#tap "homebrew/core"
 
 # Packages
 brew "asdf"             # Extendable version manager with support for Ruby, Node.js, Erlang & more

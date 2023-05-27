@@ -7,7 +7,6 @@ return {
         -- pastel theme that aims to be the middle ground between low and high contrast themes
         "catppuccin/nvim",
         name = "catppuccin",
-        cond = not vim.g.vscode,
         lazy = true,
         opts = {
             flavour = vim.env.THEME_FLAVOUR, -- latte, frappe, macchiato, mocha

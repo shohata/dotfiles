@@ -37,43 +37,54 @@ return {
         ---@type TSConfig
         opts = {
             highlight = { enable = true },
-            indent = { enable = true, disable = { "python" } },
-            context_commentstring = { enable = true, enable_autocmd = false },
+            indent = { enable = true },
             ensure_installed = {
                 "bash",
                 "c",
-                "cmake",
-                "cpp",
                 "html",
-                "java",
+                "javascript",
                 "json",
                 "lua",
+                "luadoc",
                 "luap",
-                "make",
                 "markdown",
                 "markdown_inline",
                 "python",
+                "query",
                 "regex",
-                "ruby",
                 "rust",
                 "scala",
                 "toml",
+                "tsx",
+                "typescript",
                 "verilog",
                 "vim",
+                "vimdoc",
                 "yaml",
             },
             incremental_selection = {
                 enable = true,
                 keymaps = {
-                    init_selection = "<c-space>",
-                    node_incremental = "<c-space>",
-                    scope_incremental = "<nop>",
+                    init_selection = "<C-space>",
+                    node_incremental = "<C-space>",
+                    scope_incremental = false,
                     node_decremental = "<bs>",
                 },
             },
         },
         ---@param opts TSConfig
         config = function(_, opts)
+            if type(opts.ensure_installed) == "table" then
+                ---@type table<string, boolean>
+                local added = {}
+                opts.ensure_installed = vim.tbl_filter(function(lang)
+                    if added[lang] then
+                        return false
+                    end
+                    added[lang] = true
+                    return true
+                end, opts.ensure_installed)
+            end
             require("nvim-treesitter.configs").setup(opts)
         end,
     },

@@ -26,39 +26,31 @@ return {
         build = (not jit.os:find("Windows"))
                 and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
             or nil,
+        dependencies = {
+            "rafamadriz/friendly-snippets",
+            config = function()
+                require("luasnip.loaders.from_vscode").lazy_load()
+            end,
+        },
         opts = {
             history = true,
             delete_check_events = "TextChanged",
         },
+        -- stylua: ignore
         keys = {
             {
-                "<tab>",
-                function()
-                    return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-                end,
-                expr = true,
-                silent = true,
-                mode = "i",
+            "<tab>",
+            function()
+                return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+            end,
+            expr = true, silent = true, mode = "i",
             },
-            {
-                "<tab>",
-                function()
-                    require("luasnip").jump(1)
-                end,
-                mode = "s",
-            },
-            {
-                "<s-tab>",
-                function()
-                    require("luasnip").jump(-1)
-                end,
-                mode = { "i", "s" },
-            },
+            { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
+            { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
         },
     },
     {
         "rafamadriz/friendly-snippets",
-        dependencies = "L3MON4D3/LuaSnip",
         config = function()
             require("luasnip.loaders.from_vscode").lazy_load()
         end,
@@ -72,8 +64,6 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
             "saadparwaiz1/cmp_luasnip",
-            "L3MON4D3/LuaSnip",
-            "tzachar/cmp-tabnine",
         },
         opts = function()
             local cmp = require("cmp")
@@ -104,7 +94,6 @@ return {
                     { name = "luasnip" },
                     { name = "buffer" },
                     { name = "path" },
-                    { name = "cmp_tabnine" },
                 }),
                 formatting = {
                     format = function(_, item)
@@ -126,9 +115,7 @@ return {
     {
         "echasnovski/mini.pairs",
         event = "VeryLazy",
-        config = function(_, opts)
-            require("mini.pairs").setup(opts)
-        end,
+        opts = {},
     },
     {
         "echasnovski/mini.surround",
@@ -161,25 +148,19 @@ return {
                 update_n_lines = "gzn", -- Update `n_lines`
             },
         },
-        config = function(_, opts)
-            -- use gz mappings instead of s to prevent conflict with leap
-            require("mini.surround").setup(opts)
-        end,
     },
     { "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
     {
         "echasnovski/mini.comment",
         event = "VeryLazy",
         opts = {
-            hooks = {
-                pre = function()
-                    require("ts_context_commentstring.internal").update_commentstring({})
+            options = {
+                custom_commentstring = function()
+                    return require("ts_context_commentstring.internal").calculate_commentstring()
+                        or vim.bo.commentstring
                 end,
             },
         },
-        config = function(_, opts)
-            require("mini.comment").setup(opts)
-        end,
     },
     {
         "echasnovski/mini.ai",
@@ -188,7 +169,7 @@ return {
         --   { "i", mode = { "x", "o" } },
         -- },
         event = "VeryLazy",
-        dependencies = "nvim-treesitter-textobjects",
+        dependencies = { "nvim-treesitter-textobjects" },
         opts = function()
             local ai = require("mini.ai")
             return {
