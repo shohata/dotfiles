@@ -59,8 +59,14 @@ zinit ice wait"0b" lucid \
     src"${XDG_CONFIG_HOME:-${HOME}/.config}/fzf/fzf.zsh"
 zinit light junegunn/fzf
 
-zinit ice wait"0b" lucid as"program" from"gh-r"
-zinit light denisidoro/navi
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    zinit ice wait"0b" lucid as"program" from"gh-r" bpick"*darwin*"
+    zinit light denisidoro/navi
+else
+    zinit ice wait"0b" lucid as"program" from"gh-r" bpick"*linux*"
+    zinit light denisidoro/navi
+fi
 
 zinit ice wait"0c" lucid
 zinit light momo-lab/zsh-replace-multiple-dots
