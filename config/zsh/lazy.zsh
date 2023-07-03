@@ -84,27 +84,23 @@ export FZF_DEFAULT_OPTS="--color bg:-1,bg+:-1,fg:-1,fg+:#feffff,hl:#993f84,hl+:#
 # ----------------------------
 # navi
 # ----------------------------
-if [[ -x "$(command -v navi)" ]]; then
-    #export NAVI_PATH="$(navi info cheats-path)"
-    export NAVI_PATH="${XDG_DATA_HOME}/navi/cheats"
-    export NAVI_CONFIG="${XDG_CONFIG_HOME}/navi/config.yaml"
+#export NAVI_PATH="$(navi info cheats-path)"
+export NAVI_PATH="${XDG_DATA_HOME}/navi/cheats"
+export NAVI_CONFIG="${XDG_CONFIG_HOME}/navi/config.yaml"
 
-    # Ctrl+G is assigned to launching navi
-    eval "$(navi widget zsh)"
-fi
+# Ctrl+G is assigned to launching navi
+[[ -x "$(command -v navi)" ]] && eval "$(navi widget zsh)"
 
 # ----------------------------
 # asdf
 # ----------------------------
-if [[ -x "$(command -v asdf)" ]]; then
-    export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
-    export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
+export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
+export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
 
-    # Space expands abbreviations (abbr-expand-and-space)
-    # Ctrl+Space is a normal space
-    # Enter expands and accepts abbreviations (abbr-expand-and-accept)
-    source "$(brew --prefix asdf)/libexec/asdf.sh"
-fi
+# Space expands abbreviations (abbr-expand-and-space)
+# Ctrl+Space is a normal space
+# Enter expands and accepts abbreviations (abbr-expand-and-accept)
+[[ -x "$(command -v asdf)" ]] && source "$(brew --prefix asdf)/libexec/asdf.sh"
 
 # ----------------------------
 # Google Cloud SDk

@@ -6,7 +6,7 @@ typeset -U fpath
 
 path=(
     "${HOME}/.local/bin"(N-/)
-    "$(brew --prefix grep)/libexec/gnubin"(N-/)
+    #"$(brew --prefix coreutils)/libexec/gnubin"(N-/)
     "$(brew --prefix)/sbin"(N-/)
     "$path[@]"
 )

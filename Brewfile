@@ -33,6 +33,7 @@ brew "awk"              # Text processing scripting language
 brew "awscli"           # Official Amazon AWS command-line interface
 brew "bat"              # cat alternative
 brew "cmake"            # Cross-platform make
+brew "coreutiles"       # GNU File, Shell, and Text utilities
 brew "duf"              # df alternate
 brew "exa"              # ls alternative
 brew "fd"               # find alternative
