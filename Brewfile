@@ -37,7 +37,6 @@ brew "duf"              # df alternate
 brew "exa"              # ls alternative
 brew "fd"               # find alternative
 brew "ffmpeg"           # Play, record, convert, and stream audio and video
-brew "fzf"              # Fuzzy file searcher, used in scripts and in vim
 brew "gh"               # GitHub CLI
 brew "ghq"              # Remote repository management made easy
 brew "git"              # Git version control (latest version)
@@ -52,7 +51,6 @@ brew "jq"               # Work with JSON files in shell scripts
 brew "lua"              # Powerful, lightweight programming language
 brew "luarocks"         # Package manager for the Lua programming language
 brew "make"             # Utility for directing compilation
-brew "navi"             # interactive cheatsheet tool for the command-line
 brew "ncdu"             # du alternate
 brew "neofetch"         # Pretty system info
 brew "neovim"           # vim alternative

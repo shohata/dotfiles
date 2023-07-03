@@ -48,25 +48,34 @@ ZINIT[ZCOMPDUMP_PATH]="${XDG_CACHE_HOME}/zsh/.zcompdump"
 source "${ZINIT_HOME}/zinit.zsh"
 
 zinit ice wait"0a" lucid as"command" from"gh-r" \
-          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-          atpull"%atclone" src"init.zsh"
+    atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+    atpull"%atclone" src"init.zsh"
 zinit light starship/starship
 
-zinit ice wait"0b" lucid
+zinit ice wait"0b" lucid as"program" \
+    atclone"./install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish" \
+    atpull"%atclone" \
+    atpick"bin/fzf"
+zinit light junegunn/fzf
+
+zinit ice wait"0b" lucid from"gh-r" as"program"
+zinit light denisidoro/navi
+
+zinit ice wait"0c" lucid
 zinit light momo-lab/zsh-replace-multiple-dots
 
-zinit ice wait"0b" lucid
+zinit ice wait"0c" lucid
 zinit light Aloxaf/fzf-tab
 
 zinit ice wait"0c" lucid
 zinit light olets/zsh-abbr
 
-zinit ice wait"0d" lucid
+zinit ice wait"0c" lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
 
-zinit ice wait"0d" lucid atload"_zsh_autosuggest_start"
+zinit ice wait"0c" lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
 zinit ice wait"0e" lucid blockf \
-    atload"source \"$ZDOTDIR/lazy.zsh\"; zicompinit; zicdreplay"
+    atload"source '${ZDOTDIR}/lazy.zsh'; zicompinit; zicdreplay"
 zinit light zsh-users/zsh-completions
