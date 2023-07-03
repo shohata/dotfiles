@@ -33,20 +33,24 @@ bindkey '^O' edit-command-line  # edit the current command line in $EDITOR
 # ----------------------------
 # Prompt
 # ----------------------------
-if [[ -x "$(command -v starship)" ]]; then
-    PS1="%F{green}%1~"$'\n'"❯%f "
-    eval "$(starship init zsh)"
-fi
+PS1="%F{green}%1~"$'\n'"❯%f "
 
 # ----------------------------
 # Plugins
 # ----------------------------
-ZINIT_HOME="$XDG_DATA_HOME/zinit/zinit.git"
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "$ZINIT_HOME/zinit.zsh"
+ZINIT_HOME="${XDG_DATA_HOME}/zinit/zinit.git"
+[ ! -d "${ZINIT_HOME}" ] && mkdir -p "$(dirname "${ZINIT_HOME}")"
+[ ! -d "${ZINIT_HOME}/.git" ] && git clone https://github.com/zdharma-continuum/zinit.git "${ZINIT_HOME}"
 
-ZINIT[ZCOMPDUMP_PATH]="$XDG_CACHE_HOME/zsh/zcompdump"
+declare -A ZINIT
+ZINIT[BIN_DIR]="${ZINIT_HOME}"
+ZINIT[ZCOMPDUMP_PATH]="${XDG_CACHE_HOME}/zsh/.zcompdump"
+source "${ZINIT_HOME}/zinit.zsh"
+
+zinit ice wait"0a" lucid as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh"
+zinit light starship/starship
 
 zinit ice wait"0b" lucid
 zinit light momo-lab/zsh-replace-multiple-dots

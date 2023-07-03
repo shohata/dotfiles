@@ -111,6 +111,14 @@ if [[ -x "$(command -v asdf)" ]]; then
 fi
 
 # ----------------------------
+# Google Cloud SDk
+# ----------------------------
+if [[ -x "$(command -v gcloud)" ]]; then
+    source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+    source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+fi
+
+# ----------------------------
 # User
 # ----------------------------
 export KEYTIMEOUT=1                 # 10ms delay for key sequences
