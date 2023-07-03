@@ -3,7 +3,7 @@
 # ----------------------------
 # History
 # ----------------------------
-HISTFILE="$XDG_STATE_HOME/zsh_history"
+HISTFILE="${XDG_STATE_HOME}/zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
 
@@ -21,7 +21,7 @@ zshaddhistory() {
 # ----------------------------
 # less
 # ----------------------------
-export LESSHISTFILE="$XDG_STATE_HOME/lesshst"
+export LESSHISTFILE="${XDG_STATE_HOME}/lesshst"
 
 # ----------------------------
 # man
@@ -40,81 +40,81 @@ export LESS_TERMCAP_mh="$(tput dim)"                                # begin half
 # ----------------------------
 # SQL
 # ----------------------------
-export SQLITE_HISTORY="$XDG_STATE_HOME/sqlite_history"
-export MYSQL_HISTFILE="$XDG_STATE_HOME/mysql_history"
-export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
+export SQLITE_HISTORY="${XDG_STATE_HOME}/sqlite_history"
+export MYSQL_HISTFILE="${XDG_STATE_HOME}/mysql_history"
+export PSQL_HISTORY="${XDG_STATE_HOME}/psql_history"
 
 # ----------------------------
 # Node.js
 # ----------------------------
-export NODE_REPL_HISTORY="$XDG_STATE_HOME/node_repl_history"
+export NODE_REPL_HISTORY="${XDG_STATE_HOME}/node_repl_history"
 
 # ----------------------------
 # npm
 # ----------------------------
-export NPM_CONFIG_DIR="$XDG_CONFIG_HOME/npm"
-export NPM_DATA_DIR="$XDG_DATA_HOME/npm"
-export NPM_CACHE_DIR="$XDG_CACHE_HOME/npm"
+export NPM_CONFIG_DIR="${XDG_CONFIG_HOME}/npm"
+export NPM_DATA_DIR="${XDG_DATA_HOME}/npm"
+export NPM_CACHE_DIR="${XDG_CACHE_HOME}/npm"
 export NPM_CONFIG_USERCONFIG="$NPM_CONFIG_DIR/npmrc"
 
 # ----------------------------
 # python
 # ----------------------------
-export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/python"
-export PYTHONUSERBASE="$XDG_DATA_HOME/python"
+export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}/python"
+export PYTHONUSERBASE="${XDG_DATA_HOME}/python"
 
 # ----------------------------
 # repgrep
 # ----------------------------
-export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
 
 # ----------------------------
 # zsh-abbr
 # ----------------------------
 export ABBR_AUTOLOAD=0
-export ABBR_USER_ABBREVIATIONS_FILE="$XDG_CONFIG_HOME/zsh-abbr/user-abbreviations"
+export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CONFIG_HOME}/zsh-abbr/user-abbreviations"
 
 # ----------------------------
 # fzf
 # ----------------------------
-if [ -f $HOME/.fzf.zsh ]; then
-    export FZF_DEFAULT_COMMAND="fd --type f"
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_DEFAULT_OPTS="--color bg:-1,bg+:-1,fg:-1,fg+:#feffff,hl:#993f84,hl+:#d256b5,info:#676767,prompt:#676767,pointer:#676767"
-    source "$HOME/.fzf.zsh"
-fi
+export FZF_DEFAULT_COMMAND="fd --type f"
+export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
+export FZF_DEFAULT_OPTS="--color bg:-1,bg+:-1,fg:-1,fg+:#feffff,hl:#993f84,hl+:#d256b5,info:#676767,prompt:#676767,pointer:#676767"
 
 # ----------------------------
 # navi
 # ----------------------------
-if [[ -x "$(command -v navi)" ]]; then
-    #export NAVI_PATH="$XDG_DATA_HOME/navi/cheats"
-    export NAVI_PATH="$(navi info cheats-path)"
-    export CHEATS_PATH="$XDG_CONFIG_HOME/navi/cheats"
-    export NAVI_CONFIG="$XDG_CONFIG_HOME/navi/config.yaml"
+#export NAVI_PATH="$(navi info cheats-path)"
+export NAVI_PATH="${XDG_DATA_HOME}/navi/cheats"
+export NAVI_CONFIG="${XDG_CONFIG_HOME}/navi/config.yaml"
 
-    # Ctrl+G is assigned to launching navi
-    eval "$(navi widget zsh)"
-fi
+# Ctrl+G is assigned to launching navi
+[[ -x "$(command -v navi)" ]] && eval "$(navi widget zsh)"
 
 # ----------------------------
 # asdf
 # ----------------------------
-if [[ -x "$(command -v asdf)" ]]; then
-    export ASDF_DATA_DIR="$XDG_DATA_HOME/asdf"
-    export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
+export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
+export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
 
-    # Space expands abbreviations (abbr-expand-and-space)
-    # Ctrl+Space is a normal space
-    # Enter expands and accepts abbreviations (abbr-expand-and-accept)
-    source "$(brew --prefix asdf)/libexec/asdf.sh"
+# Space expands abbreviations (abbr-expand-and-space)
+# Ctrl+Space is a normal space
+# Enter expands and accepts abbreviations (abbr-expand-and-accept)
+[[ -x "$(command -v asdf)" ]] && source "$(brew --prefix asdf)/libexec/asdf.sh"
+
+# ----------------------------
+# Google Cloud SDk
+# ----------------------------
+if [[ -x "$(command -v gcloud)" ]]; then
+    source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+    source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 fi
 
 # ----------------------------
 # User
 # ----------------------------
 export KEYTIMEOUT=1                 # 10ms delay for key sequences
-export CODE_DIR="$HOME/Developer"   # directory where my code exists
+export CODE_DIR="${HOME}/Developer"   # directory where my code exists
 export THEME_FLAVOUR="mocha"        # catppuccin flavour
 
 # ----------------------------
@@ -134,7 +134,7 @@ unsetopt LOCAL_TRAPS        # If this option is set, the trap is resoroted when 
 # ----------------------------
 # use caching to make completion for commands such as dpkg and apt usable.
 zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME}/zsh/zcompcache"
 
 # matches case insensitive for lowercase
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -167,4 +167,4 @@ alias du="du -h -c"
 # Local zshrc
 # ----------------------------
 # If a ~/.zshrc.local exists, source it
-[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+[[ -f "${HOME}/.zshrc.local" ]] && source "${HOME}/.zshrc.local"
