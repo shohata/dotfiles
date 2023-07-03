@@ -31,6 +31,25 @@ bindkey -r '^J'                 # unbind Ctrl-j for tmux prefix
 bindkey '^O' edit-command-line  # edit the current command line in $EDITOR
 
 # ----------------------------
+# OS and ARCH
+# ----------------------------
+if [[ "$(uname)" == "Darwin" ]]; then
+    OS="Darwin"
+    if [[ "$(uname -p)" == "i386" ]]; then
+        ARCH="x86_64"
+    else
+        ARCH="aarch64"
+    fi
+else
+    OS="Linux"
+    if [[ "$(uname -p)" == "x86_64" ]]; then
+        ARCH="x86_64"
+    else
+        ARCH="aarch64"
+    fi
+fi
+
+# ----------------------------
 # Prompt
 # ----------------------------
 PS1="%F{green}%1~"$'\n'"❯%f "
@@ -59,14 +78,8 @@ zinit ice wait"0b" lucid \
     src"${XDG_CONFIG_HOME:-${HOME}/.config}/fzf/fzf.zsh"
 zinit light junegunn/fzf
 
-
-if [[ "$(uname)" == "Darwin" ]]; then
-    zinit ice wait"0b" lucid as"program" from"gh-r" bpick"*darwin*"
-    zinit light denisidoro/navi
-else
-    zinit ice wait"0b" lucid as"program" from"gh-r" bpick"*linux*"
-    zinit light denisidoro/navi
-fi
+zinit ice wait"0b" lucid as"program" from"gh-r" bpick"*${ARCH}*${OS}*"
+zinit light denisidoro/navi
 
 zinit ice wait"0c" lucid
 zinit light momo-lab/zsh-replace-multiple-dots
