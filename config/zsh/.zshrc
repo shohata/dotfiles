@@ -34,14 +34,14 @@ bindkey '^O' edit-command-line  # edit the current command line in $EDITOR
 # OS and ARCH
 # ----------------------------
 if [[ "$(uname)" == "Darwin" ]]; then
-    OS="Darwin"
+    OS="darwin"
     if [[ "$(uname -p)" == "i386" ]]; then
         ARCH="x86_64"
     else
         ARCH="aarch64"
     fi
 else
-    OS="Linux"
+    OS="linux"
     if [[ "$(uname -p)" == "x86_64" ]]; then
         ARCH="x86_64"
     else
