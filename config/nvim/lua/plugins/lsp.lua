@@ -17,6 +17,7 @@ return {
                     return require("lazyvim.util").has("nvim-cmp")
                 end,
             },
+            "scalameta/nvim-metals",
         },
         ---@class PluginLspOpts
         opts = {
@@ -33,6 +34,12 @@ return {
                     -- prefix = "icons",
                 },
                 severity_sort = true,
+            },
+            -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
+            -- Be aware that you also will need to properly configure your LSP server to
+            -- provide the inlay hints.
+            inlay_hints = {
+                enabled = false,
             },
             -- add any global capabilities here
             capabilities = {},
@@ -52,17 +59,22 @@ return {
             ---@type lspconfig.options
             servers = {
                 bashls = {},
+                clangd = {},
                 cmake = {},
                 denols = {},
                 eslint = {},
                 jsonls = {},
+                marksman = {},
                 metals = {},
                 rust_analyzer = {},
                 tsserver = {},
                 vimls = {},
-                clangd = {},
                 lua_ls = {
                     -- mason = false, -- set to false if you don't want this server to be installed with mason
+                    -- Use this to add any additional keymaps
+                    -- for specific lsp servers
+                    ---@type LazyKeys[]
+                    -- keys = {},
                     settings = {
                         Lua = {
                             workspace = {
@@ -206,8 +218,8 @@ return {
         opts = {
             ensure_installed = {
                 "prettierd",
-                "stylua",
-                "shfmt",
+                -- "stylua",
+                -- "shfmt",
                 -- "flake8",
             },
         },
@@ -229,9 +241,5 @@ return {
                 ensure_installed()
             end
         end,
-    },
-    {
-        "scalameta/nvim-metals",
-        dependencies = "nvim-lua/plenary.nvim",
     },
 }
