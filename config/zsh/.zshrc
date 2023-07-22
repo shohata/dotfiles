@@ -52,9 +52,6 @@ ZINIT[BIN_DIR]="${ZINIT_HOME}"
 ZINIT[ZCOMPDUMP_PATH]="${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/.zcompdump"
 source "${ZINIT_HOME}/zinit.zsh"
 
-ARCH="$(uname -m)"  # ${ARCH}
-OS="$(uname -o)"    # ${(L)OS#GNU/}
-
 zinit ice wait"0a" lucid as"program" from"gh-r" \
     atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
     atpull"%atclone" \
@@ -67,6 +64,11 @@ zinit ice wait"0b" lucid \
     atpull"%atclone" \
     src"${XDG_CONFIG_HOME:-${HOME}/.config}/fzf/fzf.zsh"
 zinit light junegunn/fzf
+
+[ -n "$(uname -o | grep -i darwin)" ] && NEOVIM_CMD="nvim-macos/bin/nvim"
+[ -n "$(uname -o | grep -i linux)" ] && NEOVIM_CMD="nvim-linux64/bin/nvim"
+zinit ice wait"0b" lucid as"program" from"gh-r" pick"${NEOVIM_CMD}"
+zinit light neovim/neovim
 
 zinit ice wait"0c" lucid
 zinit light momo-lab/zsh-replace-multiple-dots
