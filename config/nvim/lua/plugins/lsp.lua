@@ -11,12 +11,7 @@ return {
             { "folke/neodev.nvim", opts = {} },
             "mason.nvim",
             "williamboman/mason-lspconfig.nvim",
-            {
-                "hrsh7th/cmp-nvim-lsp",
-                cond = function()
-                    return require("lazyvim.util").has("nvim-cmp")
-                end,
-            },
+            "hrsh7th/cmp-nvim-lsp",
             "scalameta/nvim-metals",
         },
         ---@class PluginLspOpts
@@ -218,7 +213,7 @@ return {
         opts = {
             ensure_installed = {
                 "prettierd",
-                -- "stylua",
+                "stylua",
                 -- "shfmt",
                 -- "flake8",
             },
