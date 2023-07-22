@@ -214,7 +214,7 @@ return {
             ensure_installed = {
                 "prettierd",
                 "stylua",
-                -- "shfmt",
+                "shfmt",
                 -- "flake8",
             },
         },
