@@ -64,6 +64,7 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
             "saadparwaiz1/cmp_luasnip",
+            "tzachar/cmp-tabnine",
         },
         opts = function()
             local cmp = require("cmp")
