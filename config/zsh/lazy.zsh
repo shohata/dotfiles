@@ -71,6 +71,9 @@ export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
 # ----------------------------
 # zsh-abbr
 # ----------------------------
+# Space expands abbreviations (abbr-expand-and-space)
+# Ctrl+Space is a normal space
+# Enter expands and accepts abbreviations (abbr-expand-and-accept)
 export ABBR_AUTOLOAD=0
 export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CONFIG_HOME}/zsh-abbr/user-abbreviations"
 
@@ -82,39 +85,32 @@ export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
 export FZF_DEFAULT_OPTS="--color bg:-1,bg+:-1,fg:-1,fg+:#feffff,hl:#993f84,hl+:#d256b5,info:#676767,prompt:#676767,pointer:#676767"
 
 # ----------------------------
-# navi
-# ----------------------------
-#export NAVI_PATH="$(navi info cheats-path)"
-export NAVI_PATH="${XDG_DATA_HOME}/navi/cheats"
-export NAVI_CONFIG="${XDG_CONFIG_HOME}/navi/config.yaml"
-
-# Ctrl+G is assigned to launching navi
-[[ -x "$(command -v navi)" ]] && eval "$(navi widget zsh)"
-
-# ----------------------------
 # asdf
 # ----------------------------
 export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
 export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
 
-# Space expands abbreviations (abbr-expand-and-space)
-# Ctrl+Space is a normal space
-# Enter expands and accepts abbreviations (abbr-expand-and-accept)
-[[ -x "$(command -v asdf)" ]] && source "$(brew --prefix asdf)/libexec/asdf.sh"
+if [[ -x "$(command -v asdf)" ]]; then
+    if [[ -x "$(command -v brew)" ]]; then
+        source "$(brew --prefix asdf)/libexec/asdf.sh"
+    fi
+fi
 
 # ----------------------------
 # Google Cloud SDk
 # ----------------------------
 if [[ -x "$(command -v gcloud)" ]]; then
-    source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-    source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+    if [[ -x "$(command -v brew)" ]]; then
+        source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+        source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+    fi
 fi
 
 # ----------------------------
 # User
 # ----------------------------
 export KEYTIMEOUT=1                 # 10ms delay for key sequences
-export CODE_DIR="${HOME}/Developer"   # directory where my code exists
+export CODE_DIR="${HOME}/Developer" # directory where my code exists
 export THEME_FLAVOUR="mocha"        # catppuccin flavour
 
 # ----------------------------
@@ -152,14 +148,39 @@ zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*' group-name ''
 
 # ----------------------------
+# Snippets
+# ----------------------------
+show_snippets() {
+    local snippets=$(cat "${ZDOTDIR}/snippets" | fzf | cut -d':' -f2-)
+    LBUFFER="${LBUFFER}${snippets}"
+    zle reset-prompt
+}
+zle -N show_snippets
+bindkey '^Y' show_snippets
+
+# ----------------------------
 # Aliases
 # ----------------------------
 # Helpers
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias rmf="rm -rf"
+
+if [[ -x "$(command -v exa)" ]]; then
+    alias ll="exa --icons --git --long"
+    alias la="exa --icons --git --all"
+    alias lla="exa --icons --git --long --all"
+    alias lld="exa --icons --git --long | grep ^d"
+else
+    alias ll="ls -lh"
+    alias la="ls -ah"
+    alias lla="ls -alh"
+    alias lld="ls -lh | grep ^d"
+fi
+
 # Disk free, in Gigabytes, not bytes
 alias df="df -h"
+
 # Calculate disk usage for a folder
 alias du="du -h -c"
 

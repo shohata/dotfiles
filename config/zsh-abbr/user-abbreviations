@@ -24,15 +24,6 @@ abbr "../.."="cd ../.."
 abbr "../../.."="cd ../../.."
 
 # ----------------------------
-# exa
-# ----------------------------
-abbr "l"="exa --icons --git --long --all"
-abbr "la"="exa --icons --git --all"
-abbr "ll"="exa --icons --git --long"
-abbr "lla"="exa --icons --git --long --all"
-abbr "lld"="exa --icons --git --long | grep ^d"
-
-# ----------------------------
 # git
 # ----------------------------
 abbr "g"="git"

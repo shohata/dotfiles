@@ -4,9 +4,14 @@
 typeset -U path
 typeset -U fpath
 
+if [[ -x "$(command -v brew)" ]]; then
+    PREFIX="$(brew --prefix)"
+else
+    PREFIX="/usr/local"
+fi
+
 path=(
     "${HOME}/.local/bin"(N-/)
-    #"$(brew --prefix coreutils)/libexec/gnubin"(N-/)
     "$(brew --prefix)/sbin"(N-/)
     "$path[@]"
 )
@@ -31,25 +36,6 @@ bindkey -r '^J'                 # unbind Ctrl-j for tmux prefix
 bindkey '^O' edit-command-line  # edit the current command line in $EDITOR
 
 # ----------------------------
-# OS and ARCH
-# ----------------------------
-if [[ "$(uname)" == "Darwin" ]]; then
-    OS="darwin"
-    if [[ "$(uname -p)" == "i386" ]]; then
-        ARCH="x86_64"
-    else
-        ARCH="aarch64"
-    fi
-else
-    OS="linux"
-    if [[ "$(uname -p)" == "x86_64" ]]; then
-        ARCH="x86_64"
-    else
-        ARCH="aarch64"
-    fi
-fi
-
-# ----------------------------
 # Prompt
 # ----------------------------
 PS1="%F{green}%1~"$'\n'"❯%f "
@@ -66,10 +52,14 @@ ZINIT[BIN_DIR]="${ZINIT_HOME}"
 ZINIT[ZCOMPDUMP_PATH]="${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/.zcompdump"
 source "${ZINIT_HOME}/zinit.zsh"
 
+ARCH="$(uname -m)"  # ${ARCH}
+OS="$(uname -o)"    # ${(L)OS#GNU/}
+
 zinit ice wait"0a" lucid as"program" from"gh-r" \
     atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
     atpull"%atclone" \
-    src"init.zsh"
+    src"init.zsh" \
+    atload"zle reset-prompt"
 zinit light starship/starship
 
 zinit ice wait"0b" lucid \
@@ -77,9 +67,6 @@ zinit ice wait"0b" lucid \
     atpull"%atclone" \
     src"${XDG_CONFIG_HOME:-${HOME}/.config}/fzf/fzf.zsh"
 zinit light junegunn/fzf
-
-zinit ice wait"0b" lucid as"program" from"gh-r" bpick"*${ARCH}*${OS}*"
-zinit light denisidoro/navi
 
 zinit ice wait"0c" lucid
 zinit light momo-lab/zsh-replace-multiple-dots
