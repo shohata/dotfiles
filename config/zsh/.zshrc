@@ -12,12 +12,12 @@ fi
 
 path=(
     "${HOME}/.local/bin"(N-/)
-    "$(brew --prefix)/sbin"(N-/)
+    "${PREFIX}/sbin"(N-/)
     "$path[@]"
 )
 
 fpath=(
-    "$(brew --prefix)/share/zsh/site-functions"(N-/)
+    "${PREFIX}/share/zsh/site-functions"(N-/)
     "$fpath[@]"
 )
 
