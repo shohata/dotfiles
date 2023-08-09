@@ -55,8 +55,7 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit ice wait"0a" lucid as"program" from"gh-r" \
     atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
     atpull"%atclone" \
-    src"init.zsh" \
-    atload"zle reset-prompt"
+    src"init.zsh"
 zinit light starship/starship
 
 zinit ice wait"0b" lucid \
@@ -79,12 +78,13 @@ zinit light Aloxaf/fzf-tab
 zinit ice wait"0c" lucid
 zinit light olets/zsh-abbr
 
-zinit ice wait"0c" lucid
+zinit ice wait"0d" lucid \
+    atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"
 zinit light zdharma-continuum/fast-syntax-highlighting
 
-zinit ice wait"0c" lucid atload"_zsh_autosuggest_start"
+zinit ice wait"0d" lucid atload"!_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
 zinit ice wait"0d" lucid blockf \
-    atload"source '${ZDOTDIR}/lazy.zsh'; zicompinit; zicdreplay"
+    atload"source '${ZDOTDIR}/lazy.zsh'"
 zinit light zsh-users/zsh-completions
