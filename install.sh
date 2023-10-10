@@ -125,6 +125,17 @@ setup_homebrew() {
     brew bundle
 }
 
+setup_nodebrew() {
+    title "Configuring Nodebrew"
+
+    info "Setting up nodebrew"
+    nodebrew setup
+
+    info "Installing latest Node.js"
+    nodebrew install latest
+    nodebrew use latest
+}
+
 setup_git() {
     title "Setting up Git"
 
@@ -301,6 +312,9 @@ link)
 homebrew)
     setup_homebrew
     ;;
+nodebrew)
+    setup_nodebrew
+    ;;
 git)
     setup_git
     ;;
@@ -328,7 +342,7 @@ all)
     setup_macos
     ;;
 *)
-    echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|git|shell|terminfo|macos|all}\n"
+    echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|nodebrew|git|shell|terminfo|macos|all}\n"
     exit 1
     ;;
 esac

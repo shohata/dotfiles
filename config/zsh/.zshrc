@@ -11,6 +11,8 @@ else
 fi
 
 path=(
+    "${NODEBREW_ROOT}/current/bin"
+    "${NPM_DATA_DIR}/bin"
     "${HOME}/.local/bin"(N-/)
     "${PREFIX}/sbin"(N-/)
     "$path[@]"

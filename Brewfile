@@ -6,16 +6,18 @@ if OS.mac?
     brew "noti"                 # Utility to display notifications from scripts
     brew "trash"                # rm, but put in the trash rather than completely delete
 
-    # Applications
-    cask "google-chrome"            # Google Chrome
+    # CLI
     cask "google-cloud-sdk"         # Google Cloud SDK
-    cast "google-drive"             # Google Drive
+    cask "session-manager-plugin"   # Plugin for AWS CLI to start and end sessions that connect to managed instances
+
+    # Applications
     cask "hammerspoon"              # Powerful automation tool for OS X
     cask "kitty"                    # Better terminal emulator
-    cask "obsidian"                 # Knowledge base
-    cask "session-manager-plugin"   # Plugin for AWS CLI to start and end sessions that connect to managed instances
-    cask "visual-studio-code"       # Open-source code editor
-    cask "zoom"                     # Video communication and virtual meeting platform
+    #cask "google-chrome"            # Google Chrome
+    #cast "google-drive"             # Google Drive
+    #cask "obsidian"                 # Knowledge base
+    #cask "visual-studio-code"       # Open-source code editor
+    #cask "zoom"                     # Video communication and virtual meeting platform
 
     # Fonts
     cask "font-cousine-nerd-font"
@@ -55,7 +57,7 @@ brew "make"             # Utility for directing compilation
 brew "ncdu"             # du alternate
 brew "neofetch"         # Pretty system info
 brew "neovim"           # vim alternative
-brew "node"             # Platform built on V8 to build network applications
+brew "nodebrew"         # Node.js version manager
 brew "procs"            # ps alternative
 brew "python"           # python (latst)
 brew "qpdf"             # Tools for and transforming and inspecting PDF files
