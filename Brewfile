@@ -37,7 +37,7 @@ brew "bat"              # cat alternative
 brew "cmake"            # Cross-platform make
 brew "coreutiles"       # GNU File, Shell, and Text utilities
 brew "duf"              # df alternate
-brew "exa"              # ls alternative
+brew "eza"              # Modern, maintained replacement for ls, build on exa
 brew "fd"               # find alternative
 brew "ffmpeg"           # Play, record, convert, and stream audio and video
 brew "gh"               # GitHub CLI

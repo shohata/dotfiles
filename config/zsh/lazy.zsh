@@ -93,11 +93,11 @@ alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias rmf="rm -rf"
 
-if [[ -x "$(command -v exa)" ]]; then
-    alias ll="exa --icons --git --long"
-    alias la="exa --icons --git --all"
-    alias lla="exa --icons --git --long --all"
-    alias lld="exa --icons --git --long | grep ^d"
+if [[ -x "$(command -v eza)" ]]; then
+    alias ll="eza --icons --git --long"
+    alias la="eza --icons --git --all"
+    alias lla="eza --icons --git --long --all"
+    alias lld="eza --icons --git --long | grep ^d"
 else
     alias ll="ls -lh"
     alias la="ls -ah"
