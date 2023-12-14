@@ -3,8 +3,9 @@ if OS.mac?
     #tap "homebrew/cask"
     tap "homebrew/cask-fonts"
 
-    brew "noti"                 # Utility to display notifications from scripts
-    brew "trash"                # rm, but put in the trash rather than completely delete
+    brew "noti"                     # Utility to display notifications from scripts
+    brew "trash"                    # rm, but put in the trash rather than completely delete
+    brew "coreutiles"               # GNU File, Shell, and Text utilities
 
     # CLI
     cask "google-cloud-sdk"         # Google Cloud SDK
@@ -35,8 +36,8 @@ brew "awk"              # Text processing scripting language
 brew "awscli"           # Official Amazon AWS command-line interface
 brew "bat"              # cat alternative
 brew "cmake"            # Cross-platform make
-brew "coreutiles"       # GNU File, Shell, and Text utilities
 brew "duf"              # df alternate
+brew "dvc"              # Git for data science projects
 brew "eza"              # Modern, maintained replacement for ls, build on exa
 brew "fd"               # find alternative
 brew "ffmpeg"           # Play, record, convert, and stream audio and video
@@ -62,7 +63,6 @@ brew "procs"            # ps alternative
 brew "python"           # python (latst)
 brew "qpdf"             # Tools for and transforming and inspecting PDF files
 brew "ripgrep"          # Very fast file searcher
-brew "starship"         # Cross-shell prompt for astronauts
 brew "tmux"             # Terminal multiplexer
 brew "tree"             # Pretty-print directory contents
 brew "vim"              # vim (latest)
