@@ -104,6 +104,10 @@ export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
 export KEYTIMEOUT=1                 # 10ms delay for key sequences
 export CODE_DIR="${HOME}/Developer" # directory where my code exists
 export THEME_FLAVOUR="mocha"        # catppuccin flavour
+export USER_ID="$(id -u)"
+export GROUP_ID="$(id -g)"
+export USER_NAME="$(id -nu)"
+export GROUP_NAME="$(id -ng)"
 
 # Skip the not really helping Ubuntu global compinit
 skip_global_compinit=1
