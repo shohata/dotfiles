@@ -41,6 +41,13 @@ if [[ -x "$(command -v gcloud)" ]]; then
 fi
 
 # ----------------------------
+# Lima
+# ----------------------------
+if [[ -x "$(command -v limactl)" ]]; then
+    export DOCKER_HOST=$(limactl list docker --format 'unix://{{.Dir}}/sock/docker.sock')
+fi
+
+# ----------------------------
 # Options
 # ----------------------------
 setopt COMPLETE_ALIASES     # make alias completion available

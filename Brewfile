@@ -1,3 +1,6 @@
+#tap "homebrew/core"
+tap "homebrew/bundle"
+
 if OS.mac?
     # taps
     #tap "homebrew/cask"
@@ -6,6 +9,10 @@ if OS.mac?
     brew "noti"                     # Utility to display notifications from scripts
     brew "trash"                    # rm, but put in the trash rather than completely delete
     brew "coreutiles"               # GNU File, Shell, and Text utilities
+    brew "docker"                   # Pack, ship and run any application as a lightweight container
+    brew "docker-buildx"            # Docker CLI plugin for extended build capabilities with BuildKit
+    brew "docker-compose"           # Isolated development environments using Docker
+    brew "lima"                     # Linux virtual machines
 
     # CLI
     cask "google-cloud-sdk"         # Google Cloud SDK
@@ -26,9 +33,6 @@ if OS.mac?
 elsif OS.linux?
     brew "xclip"                # Access to clipboard (similar to pbcopy/pbpaste)
 end
-
-#tap "homebrew/core"
-tap "homebrew/bundle"
 
 # Packages
 brew "asdf"             # Extendable version manager with support for Ruby, Node.js, Erlang & more

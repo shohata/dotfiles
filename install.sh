@@ -136,6 +136,19 @@ setup_nodebrew() {
     nodebrew use latest
 }
 
+setup_lima() {
+    title "Configuring Lima"
+
+    info "Installing Docker VM"
+    limactl start template://docker
+
+    info "Installing Docker CLI Plugins"
+    pluginDir="$HOME/.docker/cli-plugins"
+    mkdir -p $pluginDir
+    ln -sfn "$(brew --prefix docker-compose)/bin/docker-buildx" "$pluginDir/compose"
+    ln -sfn "$(brew --prefix docker-buildx)/bin/docker-buildx" "$pluginDir/docker-buildx"
+}
+
 setup_git() {
     title "Setting up Git"
 
@@ -315,6 +328,9 @@ homebrew)
 nodebrew)
     setup_nodebrew
     ;;
+lima)
+    setup_lima
+    ;;
 git)
     setup_git
     ;;
@@ -336,13 +352,13 @@ catppuccin)
 all)
     setup_symlinks
     setup_homebrew
+    setup_nodebrew
     setup_git
     setup_shell
     setup_terminfo
-    setup_macos
     ;;
 *)
-    echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|nodebrew|git|shell|terminfo|macos|all}\n"
+    echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|nodebrew|lima|git|shell|terminfo|macos|all}\n"
     exit 1
     ;;
 esac
