@@ -13,7 +13,7 @@ return {
     {
         "folke/persistence.nvim",
         event = "BufReadPre",
-        opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
+        opts = { options = vim.opt.sessionoptions:get() },
         -- stylua: ignore
         keys = {
             { "<leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
@@ -22,5 +22,4 @@ return {
         },
     },
     { "nvim-lua/plenary.nvim", lazy = true },
-    { "tpope/vim-repeat", event = "VeryLazy" },
 }

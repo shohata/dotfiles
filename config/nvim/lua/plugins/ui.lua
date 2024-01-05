@@ -16,17 +16,19 @@ return {
         },
         opts = {
             timeout = 3000,
-            background_colour = "#000000",
             max_height = function()
                 return math.floor(vim.o.lines * 0.75)
             end,
             max_width = function()
                 return math.floor(vim.o.columns * 0.75)
             end,
+            on_open = function(win)
+                vim.api.nvim_win_set_config(win, { zindex = 100 })
+            end,
         },
         init = function()
-            -- when noice is not enabled, install notify on VeryLazy
             local Util = require("lazyvim.util")
+            -- when noice is not enabled, install notify on VeryLazy
             if not Util.has("noice.nvim") then
                 Util.on_very_lazy(function()
                     vim.notify = require("notify")
@@ -56,13 +58,20 @@ return {
         keys = {
             { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
             { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
+            { "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "Delete other buffers" },
+            { "<leader>br", "<Cmd>BufferLineCloseRight<CR>", desc = "Delete buffers to the right" },
+            { "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", desc = "Delete buffers to the left" },
+            { "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev buffer" },
+            { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
+            { "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev buffer" },
+            { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
         },
         opts = {
             options = {
-                -- stylua: ignore
-                close_command = function(n) require("mini.bufremove").delete(n, false) end,
-                -- stylua: ignore
-                right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
+      -- stylua: ignore
+      close_command = function(n) require("mini.bufremove").delete(n, false) end,
+      -- stylua: ignore
+      right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
                 diagnostics = "nvim_lsp",
                 always_show_bufferline = false,
                 diagnostics_indicator = function(_, _, diag)
@@ -81,24 +90,54 @@ return {
                 },
             },
         },
+        config = function(_, opts)
+            require("bufferline").setup(opts)
+            -- Fix bufferline when restoring a session
+            vim.api.nvim_create_autocmd("BufAdd", {
+                callback = function()
+                    vim.schedule(function()
+                        pcall(nvim_bufferline)
+                    end)
+                end,
+            })
+        end,
     },
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
+        init = function()
+            vim.g.lualine_laststatus = vim.o.laststatus
+            if vim.fn.argc(-1) > 0 then
+                -- set an empty statusline till lualine loads
+                vim.o.statusline = " "
+            else
+                -- hide the statusline on the starter page
+                vim.o.laststatus = 0
+            end
+        end,
         opts = function()
+            -- PERF: we don't need this lualine require madness 🤷
+            local lualine_require = require("lualine_require")
+            lualine_require.require = require
+
             local icons = require("lazyvim.config").icons
+
+            vim.o.laststatus = vim.g.lualine_laststatus
+
             local Util = require("lazyvim.util")
 
             return {
                 options = {
                     theme = "auto",
                     globalstatus = true,
-                    disabled_filetypes = { statusline = { "dashboard", "alpha" } },
+                    disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
                 },
                 sections = {
                     lualine_a = { "mode" },
                     lualine_b = { "branch" },
+
                     lualine_c = {
+                        Util.lualine.root_dir(),
                         {
                             "diagnostics",
                             symbols = {
@@ -109,36 +148,31 @@ return {
                             },
                         },
                         { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-                        { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
-                        -- stylua: ignore
-                        {
-                            function() return require("nvim-navic").get_location() end,
-                            cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
-                        },
+                        { Util.lualine.pretty_path() },
                     },
                     lualine_x = {
                         -- stylua: ignore
                         {
                             function() return require("noice").api.status.command.get() end,
                             cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-                            color = Util.fg("Statement"),
+                            color = Util.ui.fg("Statement"),
                         },
                         -- stylua: ignore
                         {
                             function() return require("noice").api.status.mode.get() end,
                             cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-                            color = Util.fg("Constant"),
+                            color = Util.ui.fg("Constant"),
                         },
                         -- stylua: ignore
                         {
                             function() return "  " .. require("dap").status() end,
                             cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
-                            color = Util.fg("Debug"),
+                            color = Util.ui.fg("Debug"),
                         },
                         {
                             require("lazy.status").updates,
                             cond = require("lazy.status").has_updates,
-                            color = Util.fg("Special"),
+                            color = Util.ui.fg("Special"),
                         },
                         {
                             "diff",
@@ -147,6 +181,16 @@ return {
                                 modified = icons.git.modified,
                                 removed = icons.git.removed,
                             },
+                            source = function()
+                                local gitsigns = vim.b.gitsigns_status_dict
+                                if gitsigns then
+                                    return {
+                                        added = gitsigns.added,
+                                        modified = gitsigns.changed,
+                                        removed = gitsigns.removed,
+                                    }
+                                end
+                            end,
                         },
                     },
                     lualine_y = {
@@ -165,19 +209,35 @@ return {
     },
     {
         "lukas-reineke/indent-blankline.nvim",
-        event = { "BufReadPost", "BufNewFile" },
+        event = "LazyFile",
         opts = {
-            -- char = "▏",
-            char = "│",
-            filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
-            show_trailing_blankline_indent = false,
-            show_current_context = false,
+            indent = {
+                char = "│",
+                tab_char = "│",
+            },
+            scope = { enabled = false },
+            exclude = {
+                filetypes = {
+                    "help",
+                    "alpha",
+                    "dashboard",
+                    "neo-tree",
+                    "Trouble",
+                    "trouble",
+                    "lazy",
+                    "mason",
+                    "notify",
+                    "toggleterm",
+                    "lazyterm",
+                },
+            },
         },
+        main = "ibl",
     },
     {
         "echasnovski/mini.indentscope",
         version = false, -- wait till new 0.7.0 release to put it back on semver
-        event = { "BufReadPre", "BufNewFile" },
+        event = "LazyFile",
         opts = {
             -- symbol = "▏",
             symbol = "│",
@@ -185,7 +245,19 @@ return {
         },
         init = function()
             vim.api.nvim_create_autocmd("FileType", {
-                pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+                pattern = {
+                    "help",
+                    "alpha",
+                    "dashboard",
+                    "neo-tree",
+                    "Trouble",
+                    "trouble",
+                    "lazy",
+                    "mason",
+                    "notify",
+                    "toggleterm",
+                    "lazyterm",
+                },
                 callback = function()
                     vim.b.miniindentscope_disable = true
                 end,
@@ -193,19 +265,16 @@ return {
         end,
     },
     {
+        "folke/which-key.nvim",
+        opts = function(_, opts)
+            if require("lazyvim.util").has("noice.nvim") then
+                opts.defaults["<leader>sn"] = { name = "+noice" }
+            end
+        end,
+    },
+    {
         "folke/noice.nvim",
         event = "VeryLazy",
-        dependencies = {
-            -- which key integration
-            {
-                "folke/which-key.nvim",
-                opts = function(_, opts)
-                    if require("lazyvim.util").has("noice.nvim") then
-                        opts.defaults["<leader>sn"] = { name = "+noice" }
-                    end
-                end,
-            },
-        },
         opts = {
             lsp = {
                 override = {
@@ -218,7 +287,11 @@ return {
                 {
                     filter = {
                         event = "msg_show",
-                        find = "%d+L, %d+B",
+                        any = {
+                            { find = "%d+L, %d+B" },
+                            { find = "; after #%d+" },
+                            { find = "; before #%d+" },
+                        },
                     },
                     view = "mini",
                 },
@@ -240,26 +313,6 @@ return {
             { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll forward", mode = {"i", "n", "s"} },
             { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll backward", mode = {"i", "n", "s"}},
         },
-    },
-    {
-        "SmiteshP/nvim-navic",
-        lazy = true,
-        init = function()
-            vim.g.navic_silence = true
-            require("lazyvim.util").on_attach(function(client, buffer)
-                if client.server_capabilities.documentSymbolProvider then
-                    require("nvim-navic").attach(client, buffer)
-                end
-            end)
-        end,
-        opts = function()
-            return {
-                separator = " ",
-                highlight = true,
-                depth_limit = 5,
-                icons = require("lazyvim.config").icons.kinds,
-            }
-        end,
     },
     { "nvim-tree/nvim-web-devicons", lazy = true },
     { "MunifTanjim/nui.nvim", lazy = true },
