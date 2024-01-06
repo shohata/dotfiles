@@ -47,6 +47,7 @@ return {
                 "python",
                 "query",
                 "regex",
+                "ssh_config",
                 "toml",
                 "tsx",
                 "typescript",

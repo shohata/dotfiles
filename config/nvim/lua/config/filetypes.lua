@@ -4,4 +4,8 @@ vim.filetype.add({
     filename = {
         ["Brewfile"] = "ruby",
     },
+    pattern = {
+        [".*/ssh/config"] = "ssh_config",
+        ["{HOME}/.ssh/config"] = "ssh_config",
+    },
 })
