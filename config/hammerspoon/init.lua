@@ -8,7 +8,7 @@ function toggleApp(app_name, key)
         else
             local space = hs.spaces.focusedSpace()
             local win = app:focusedWindow()
-            hs.spaces.moveWindowToSpace(win, space)
+            --hs.spaces.moveWindowToSpace(win, space)
             win:focus()
         end
     end)
